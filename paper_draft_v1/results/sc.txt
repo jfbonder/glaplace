@@ -1,0 +1,16 @@
+p2 h=0.1 nodes=362 it=32 conv=True true_L2_rel=4.9477e-03 nodal_L2_rel=5.4443e-04
+p2 h=0.05 nodes=1452 it=32 conv=True true_L2_rel=1.1275e-03 nodal_L2_rel=9.2896e-05
+p2 h=0.025 nodes=5809 it=32 conv=True true_L2_rel=2.8764e-04 nodal_L2_rel=1.5969e-05
+p2 h=0.0125 nodes=23227 it=32 conv=True true_L2_rel=7.0381e-05 nodal_L2_rel=2.7937e-06
+p4 h=0.1 nodes=362 it=85 conv=True true_L2_rel=4.2814e-03 nodal_L2_rel=6.8079e-04
+p4 h=0.05 nodes=1452 it=132 conv=True true_L2_rel=9.8585e-04 nodal_L2_rel=1.5869e-04
+p4 h=0.025 nodes=5809 it=149 conv=True true_L2_rel=2.4753e-04 nodal_L2_rel=3.4327e-05
+p4 h=0.0125 nodes=23227 it=226 conv=True true_L2_rel=6.1289e-05 nodal_L2_rel=8.8936e-06
+pq24 h=0.1 nodes=362 it=34 conv=True true_L2_rel=4.5511e-03 nodal_L2_rel=5.6818e-04
+pq24 h=0.05 nodes=1452 it=32 conv=True true_L2_rel=1.0329e-03 nodal_L2_rel=1.1632e-04
+pq24 h=0.025 nodes=5809 it=31 conv=True true_L2_rel=2.6419e-04 nodal_L2_rel=1.7667e-05
+pq24 h=0.0125 nodes=23227 it=30 conv=True true_L2_rel=6.4648e-05 nodal_L2_rel=3.9700e-06
+exp h=0.1 nodes=362 it=32 conv=True true_L2_rel=4.6203e-03 nodal_L2_rel=5.5684e-04
+exp h=0.05 nodes=1452 it=31 conv=True true_L2_rel=1.0496e-03 nodal_L2_rel=1.1048e-04
+exp h=0.025 nodes=5809 it=30 conv=True true_L2_rel=2.6830e-04 nodal_L2_rel=1.6833e-05
+exp h=0.0125 nodes=23227 it=29 conv=True true_L2_rel=6.5657e-05 nodal_L2_rel=3.6343e-06

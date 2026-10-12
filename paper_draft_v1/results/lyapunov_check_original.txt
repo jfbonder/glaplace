@@ -1,0 +1,4 @@
+p-q 2,4          V_0=7.798e-02 V_1200=4.427e-32  max increase of V: 7.39e-32  min A3 (n<k): -1.67e-29  min m_n: 1.54e-32
+p=1.5            V_0=1.663e-02 V_1200=1.769e-28  max increase of V: 8.45e-29  min A3 (n<k): -1.90e-28  min m_n: -1.48e-28
+exp-1-t          V_0=7.058e-02 V_1200=7.048e-32  max increase of V: 3.03e-32  min A3 (n<k): -2.93e-29  min m_n: 1.46e-32
+expLiteral c=8   V_0=4.169e+01 V_1200=1.292e-25  max increase of V: 8.76e-27  min A3 (n<k): -1.46e-26  min m_n: -1.24e-26

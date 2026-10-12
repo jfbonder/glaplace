@@ -3,3 +3,6 @@ __pycache__/
 .ipynb_checkpoints/
 *.egg-info/
 .pytest_cache/
+
+# bibliography (PDFs and notes) kept local
+biblio/

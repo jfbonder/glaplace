@@ -1,0 +1,8 @@
+p=1.2 h=0.2 nodes=88 it=6000 conv=False residual=2.81e-07 L2_rel=1.0475e-01 gradL2_rel=3.0448e-01 gradLp_rel=2.8097e-01 umax_exact=5.2083e-03 time=9
+p=1.2 h=0.1 nodes=362 it=6000 conv=False residual=4.11e-07 L2_rel=2.4977e-02 gradL2_rel=1.3981e-01 gradLp_rel=1.2861e-01 umax_exact=5.2083e-03 time=13
+p=1.2 h=0.05 nodes=1452 it=6000 conv=False residual=2.27e-07 L2_rel=6.2584e-03 gradL2_rel=6.8952e-02 gradLp_rel=6.3816e-02 umax_exact=5.2083e-03 time=20
+p=1.2 h=0.025 nodes=5809 it=6000 conv=False residual=1.15e-07 L2_rel=1.5967e-03 gradL2_rel=3.3661e-02 gradLp_rel=3.1465e-02 umax_exact=5.2083e-03 time=77
+p=1.1 h=0.2 nodes=88 it=6000 conv=False residual=3.91e-06 L2_rel=2.7396e-01 gradL2_rel=5.4214e-01 gradLp_rel=4.9984e-01 umax_exact=8.8778e-05 time=4
+p=1.1 h=0.1 nodes=362 it=6000 conv=False residual=2.50e-06 L2_rel=7.6258e-02 gradL2_rel=2.7298e-01 gradLp_rel=2.4253e-01 umax_exact=8.8778e-05 time=8
+p=1.1 h=0.05 nodes=1452 it=6000 conv=False residual=1.29e-06 L2_rel=2.1824e-02 gradL2_rel=1.3709e-01 gradLp_rel=1.2222e-01 umax_exact=8.8778e-05 time=20
+p=1.1 h=0.025 nodes=5809 it=6000 conv=False residual=6.31e-07 L2_rel=5.9599e-03 gradL2_rel=6.6304e-02 gradLp_rel=6.0180e-02 umax_exact=8.8778e-05 time=81
