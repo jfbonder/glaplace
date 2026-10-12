@@ -144,6 +144,10 @@ Other scripts: `python examples/two_phase.py --plot` (disk, $G=t^2/2+a(x)t^6/6$,
 
 ![two-phase](docs/two_phase.png)
 
+Two-phase with a **Hölder** coefficient, $G=t^2/2+\operatorname{dist}(x,S)^\alpha t^3/3$ ($S$ the first quadrant, $\alpha=1$, so $q\le p+\alpha$): `python examples/two_phase_holder.py --plot` (compares with the indicator coefficient; $\max|\nabla u_h|$, energy and $\max u_h$ stabilise under refinement).
+
+![two-phase Hölder](docs/two_phase_holder.png)
+
 ![dead core](docs/exp_dead_core.png)
 
 ## Tests
