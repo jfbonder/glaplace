@@ -1,0 +1,171 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,hyperref}
+\newtheorem{teo}{Theorem}
+\newtheorem{lema}[teo]{Lemma}
+\newtheorem{prop}[teo]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[teo]{Remark}
+\theoremstyle{definition}
+\newtheorem{ass}{Assumption}
+\newcommand{\dx}{\,dx}
+\newcommand{\R}{\mathbb R}
+\DeclareMathOperator{\dom}{dom}
+\title[Convergence of the decomposition--coordination method]{Convergence of the decomposition--coordination method for the $g$-Laplacian at the continuous level\\ {\large (working note, draft)}}
+\author{}
+\date{\today}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status.} This is a self-contained derivation, written without access to Glowinski's book. It does not quote the statement of \cite[Ch.~VI, Thm.~5.1]{Glowinski}; everything is proved from scratch with the classical Lyapunov argument for the alternating direction method of multipliers. It must be compared with the author's handwritten proof and checked by the authors before anything is built on it.
+
+\section{Setting}
+Let $\Omega\subset\R^2$ be a bounded Lipschitz domain, $f\in L^2(\Omega)$, $V=H^1_0(\Omega)$ (norm $\|\nabla v\|$), $H=L^2(\Omega;\R^2)$ with inner product $(\cdot,\cdot)$ and norm $\|\cdot\|$. Let $\Phi\colon\Omega\times[0,\infty)\to[0,\infty)$ be a Carath\'eodory function, convex and nondecreasing in $t$, $\Phi(x,0)=0$ (a Young function in $t$; $x$-dependence is allowed), and
+\[
+F(q)=\int_\Omega\Phi(x,|q(x)|)\dx\in[0,+\infty],\qquad q\in H .
+\]
+$F$ is convex, proper ($F(0)=0$) and lower semicontinuous on $H$ (Fatou). We want to solve
+\begin{equation}\label{P}
+\min_{v\in V}\ F(\nabla v)-(f,v),\qquad\text{i.e.}\qquad -\operatorname{div}\Big(g(x,|\nabla u|)\tfrac{\nabla u}{|\nabla u|}\Big)=f,\quad g=\partial_t\Phi .
+\end{equation}
+For $r>0$ the augmented Lagrangian is $\mathcal L_r(v,q,\mu)=F(q)-(f,v)+(\mu,\nabla v-q)+\frac r2\|\nabla v-q\|^2$ on $V\times H\times H$.
+
+\begin{prop}[Saddle points]\label{prop.saddle}
+$(u^*,\nu^*,\eta^*)\in V\times H\times H$ is a saddle point of $\mathcal L_r$ if and only if
+\begin{equation}\label{S}
+\nu^*=\nabla u^*,\qquad \eta^*\in\partial F(\nu^*),\qquad (\eta^*,\nabla w)=(f,w)\quad\forall w\in V .
+\end{equation}
+In particular such $u^*$ minimises \eqref{P}, and $\eta^*$ is the flux (when $\Phi(x,|\cdot|)\in C^1$ and $T(\cdot,\nu^*)\in H$: $\eta^*=g(x,|\nabla u^*|)\nabla u^*/|\nabla u^*|$; in general $\partial F(q)\subset\{\eta:\eta(x)\in\partial_\xi\Phi(x,|q|)\ \text{a.e.}\}$, with equality by Rockafellar's theorem on integral functionals). The set of saddle points does not depend on $r$.
+\end{prop}
+\begin{proof}
+($\Leftarrow$) Left inequality: $\mathcal L_r(u^*,\nu^*,\mu)$ does not depend on $\mu$ since $\nabla u^*=\nu^*$. Right inequality: for $(v,q)\in V\times H$, by the subgradient inequality and by \eqref{S} with $w=v-u^*$,
+$\mathcal L_r(v,q,\eta^*)-\mathcal L_r(u^*,\nu^*,\eta^*)\ge(\eta^*,q-\nu^*)-(f,v-u^*)+(\eta^*,\nabla v-q-\nabla u^*+\nu^*)+\frac r2\|\nabla v-q\|^2
+=(\eta^*,\nabla(v-u^*))-(f,v-u^*)+\frac r2\|\nabla v-q\|^2\ge0.$
+($\Rightarrow$) The left inequality gives $\nabla u^*=\nu^*$. The right one with $(v,q)=(u^*+sw,\nu^*)$, $w\in V$, gives $s\big[(\eta^*,\nabla w)-(f,w)\big]+\frac{rs^2}2\|\nabla w\|^2\ge0$ for all $s\in\R$, hence $(\eta^*,\nabla w)=(f,w)$; with $v=u^*$, $q$ arbitrary gives $F(q)-(\eta^*,q)+\frac r2\|\nu^*-q\|^2\ge F(\nu^*)-(\eta^*,\nu^*)$; replacing $q$ by $\nu^*+s(q-\nu^*)$, using convexity and letting $s\to0$ gives $\eta^*\in\partial F(\nu^*)$.
+\end{proof}
+
+\begin{ass}[S]\label{ass.S}
+A saddle point of $\mathcal L_r$ exists, i.e. \eqref{S} has a solution.
+\end{ass}
+Assumption (S) holds for instance when the weak solution of \eqref{P} is Lipschitz, $\nabla u\in L^\infty$, and $g(x,\cdot)$ is bounded on bounded sets uniformly in $x$: then $\eta^*=g\,\nabla u/|\nabla u|\in L^\infty\subset H$ and \eqref{S} follows from the Euler--Lagrange equation tested with $C^\infty_c$ and density in $V$. (Global Lipschitz regularity needs more than $f\in L^2$ in 2D, e.g.\ $f\in L^q$, $q>2$, plus convexity or smoothness of $\Omega$; it is known for the $p$-Laplacian and for some Orlicz-type operators; this must be checked case by case and before citing.) Note that (S) is a statement about the \emph{solution}, not directly about the exponent. For $\Phi=t^p/p$: if $1<p\le2$, $F$ is finite and continuous on all of $H$ and $|\nabla u|^{p-1}\in L^2$ is automatic once $\nabla u\in L^2$, so (S) holds if and only if the weak solution belongs to $H^1_0$; if $p>2$, (S) means $\nabla u\in L^{2p-2}$, a genuine regularity requirement (it is not implied by $u\in W^{1,p}_0$).
+
+\section{The algorithm}
+Let $r>0$. Choose $\nu_0\in H$, $\eta_1\in\partial F(\nu_0)$ (since $F\ge0=F(0)$ we always have $0\in\partial F(0)$, so $\nu_0=\eta_1=0$ is admissible for every $\Phi$). For $n\ge1$:
+\begin{align}
+&u_n\in V:\quad (\eta_n+r(\nabla u_n-\nu_{n-1}),\nabla w)=(f,w)\quad\forall w\in V,\label{alg.u}\\
+&\nu_n=\operatorname*{argmin}_{q\in H}\Big\{F(q)-(\eta_n,q)+\tfrac r2\|\nabla u_n-q\|^2\Big\},\label{alg.nu}\\
+&\eta_{n+1}=\eta_n+r(\nabla u_n-\nu_n).\label{alg.eta}
+\end{align}
+This is Glowinski's ALG2 with $\rho=r$; it coincides with the pointwise algorithm of the code: \eqref{alg.nu} is solved a.e.\ by $\nu_n=t\,w/|w|$, $w=\eta_n/r+\nabla u_n$, $g(x,t)+rt=r|w|$.
+Both steps are well posed: \eqref{alg.u} is a Poisson problem with right-hand side in $V^*$, and \eqref{alg.nu} has a unique solution because the functional is proper, convex, lower semicontinuous and strongly convex on $H$. The optimality condition of \eqref{alg.nu} is $0\in\partial F(\nu_n)-\eta_n-r(\nabla u_n-\nu_n)$, i.e.
+\begin{equation}\label{eta.in.dF}
+\eta_{n+1}\in\partial F(\nu_n)\qquad(n\ge0).
+\end{equation}
+Adding \eqref{alg.eta} to \eqref{alg.u} gives the form we use:
+\begin{equation}\label{alg.u2}
+(\eta_{n+1}+r(\nu_n-\nu_{n-1}),\nabla w)=(f,w)\quad\forall w\in V .
+\end{equation}
+Write $s_n=\nabla u_n-\nu_n$ (primal residual), so $\eta_{n+1}-\eta_n=rs_n$.
+
+\section{Convergence for a general Young function}
+\begin{teo}\label{thm.A}
+Assume (S). Let $(\nu^*,\eta^*)$ come from any saddle point and put $E_n=\frac1{2r}\|\eta_{n+1}-\eta^*\|^2+\frac r2\|\nu_n-\nu^*\|^2$. Then for $n\ge1$
+\begin{equation}\label{lyap}
+E_n+\frac r2\|s_n\|^2+\frac r2\|\nu_n-\nu_{n-1}\|^2+(\eta_{n+1}-\eta^*,\nu_n-\nu^*)+r(s_n,\nu_n-\nu_{n-1})=E_{n-1},
+\end{equation}
+where the last two terms on the left are $\ge0$. Consequently $E_n$ is nonincreasing, $(\eta_n)$, $(\nu_n)$ are bounded in $H$ and $(u_n)$ in $V$,
+\[
+\sum_n\|s_n\|^2<\infty,\quad \sum_n\|\nu_n-\nu_{n-1}\|^2<\infty,\quad \sum_n m_n<\infty,\ \ m_n:=(\eta_{n+1}-\eta^*,\nu_n-\nu^*)\ge0,
+\]
+and in particular $\|\nabla u_n-\nu_n\|\to0$, $\|\nu_n-\nu_{n-1}\|\to0$, $\|\eta_{n+1}-\eta_n\|\to0$, $m_n\to0$. Moreover there is a saddle point $(\bar u,\bar\nu,\bar\eta)$ with
+\[
+u_n\rightharpoonup\bar u\ \text{ weakly in }H^1_0(\Omega),\quad u_n\to\bar u\ \text{ strongly in }L^2(\Omega),\quad \nu_n\rightharpoonup\bar\nu,\ \ \eta_n\rightharpoonup\bar\eta\ \text{ weakly in }H.
+\]
+\end{teo}
+No growth condition ($\Delta_2$, $\nabla_2$, $p\ge2$, superlinearity) and no differentiability of $\Phi$ is used: only convexity of $F$ and (S). In particular the theorem applies to $t^p/p$ for every $p>1$, to $p$-$q$ and two-phase energies, to $t^p\log^a(1+t)$, to $e^t-1-t$ and also to $e^t-1$ (where $\partial F$ is multivalued at $q=0$).
+
+\begin{proof}
+\emph{Step 1: identity \eqref{lyap}.} Fix $n\ge1$. Subtract $(\eta^*,\nabla w)=(f,w)$ from \eqref{alg.u2} and take $w=u_n-u^*$, so that $\nabla w=\nabla u_n-\nu^*=s_n+(\nu_n-\nu^*)$:
+\[
+(\eta_{n+1}-\eta^*,s_n)+(\eta_{n+1}-\eta^*,\nu_n-\nu^*)+r(\nu_n-\nu_{n-1},s_n)+r(\nu_n-\nu_{n-1},\nu_n-\nu^*)=0 .
+\]
+Since $s_n=(\eta_{n+1}-\eta_n)/r$, the polarisation identity $2(a-c,a-b)=\|a-c\|^2+\|a-b\|^2-\|b-c\|^2$ gives
+$(\eta_{n+1}-\eta^*,s_n)=\frac1{2r}\big(\|\eta_{n+1}-\eta^*\|^2-\|\eta_n-\eta^*\|^2\big)+\frac r2\|s_n\|^2$, and likewise
+$r(\nu_n-\nu_{n-1},\nu_n-\nu^*)=\frac r2\big(\|\nu_n-\nu^*\|^2-\|\nu_{n-1}-\nu^*\|^2\big)+\frac r2\|\nu_n-\nu_{n-1}\|^2$. Inserting, we obtain \eqref{lyap}.
+
+\emph{Step 2: signs.} By \eqref{eta.in.dF} and \eqref{S}, $\eta_{n+1}\in\partial F(\nu_n)$ and $\eta^*\in\partial F(\nu^*)$; monotonicity of $\partial F$ gives $m_n\ge0$. Also $\eta_n\in\partial F(\nu_{n-1})$ for $n\ge1$ (for $n=1$ by the choice of $\eta_1$), hence $(\eta_{n+1}-\eta_n,\nu_n-\nu_{n-1})\ge0$, i.e. $r(s_n,\nu_n-\nu_{n-1})\ge0$.
+Summing \eqref{lyap} gives the boundedness and the summability statements; $\nabla u_n=s_n+\nu_n$ is bounded in $H$ and $(u_n)$ is bounded in $V$.
+
+\emph{Step 3: weak cluster points are saddle points.} Take a subsequence with $\nu_{n_k}\rightharpoonup\bar\nu$, $\eta_{n_k+1}\rightharpoonup\bar\eta$ in $H$ and $u_{n_k}\rightharpoonup\bar u$ in $V$ (hence strongly in $L^2$, Rellich). As $s_n\to0$, $\nabla u_{n_k}\rightharpoonup\bar\nu$ and so $\nabla\bar u=\bar\nu$. In \eqref{alg.u2} (with $n=n_k$), $\nu_n-\nu_{n-1}\to0$ strongly, so $(\bar\eta,\nabla w)=(f,w)$ for all $w\in V$. Next, taking $w=u_n$ in \eqref{alg.u2} and using $\nabla u_n=s_n+\nu_n$,
+\[
+(\eta_{n+1},\nu_n)=(f,u_n)-(\eta_{n+1},s_n)-r(\nu_n-\nu_{n-1},\nabla u_n)\ \longrightarrow\ (f,\bar u)=(\bar\eta,\nabla\bar u)=(\bar\eta,\bar\nu)
+\]
+along $n_k$ (the last two terms tend to $0$: bounded times strongly null). Now $\partial F$ is maximal monotone (Rockafellar) and $(\nu_{n_k},\eta_{n_k+1})\in\operatorname{graph}\partial F$; for any $(z,\zeta)\in\operatorname{graph}\partial F$, $0\le(\nu_{n_k}-z,\eta_{n_k+1}-\zeta)\to(\bar\nu-z,\bar\eta-\zeta)$, so by maximality $\bar\eta\in\partial F(\bar\nu)$. By Proposition~\ref{prop.saddle}, $(\bar u,\bar\nu,\bar\eta)$ is a saddle point.
+
+\emph{Step 4: the whole sequence converges (Opial).} Equip $H\times H$ with the norm $|(\nu,\eta)|^2=r\|\nu\|^2+\|\eta\|^2/r$ and let $x_n=(\nu_n,\eta_{n+1})$. By Step~2, $|x_n-z|$ converges for every $z=(\nu^*,\eta^*)$ in the set $\mathcal S$ of saddle-point pairs ($|x_n-z|^2=2E_n$), and by Step~3 every weak cluster point of the bounded sequence $(x_n)$ lies in $\mathcal S$. If $z_1,z_2\in\mathcal S$ are two weak cluster points, $|x_n-z_1|^2-|x_n-z_2|^2=-2\langle x_n,z_1-z_2\rangle+|z_1|^2-|z_2|^2$ converges, so $\langle x_n,z_1-z_2\rangle$ converges; evaluating the limit along the two subsequences gives $\langle z_1,z_1-z_2\rangle=\langle z_2,z_1-z_2\rangle$, i.e.\ $z_1=z_2$. Hence $x_n\rightharpoonup\bar z=(\bar\nu,\bar\eta)\in\mathcal S$. Finally $\nabla u_n=s_n+\nu_n\rightharpoonup\bar\nu$ and $u_n$ is bounded in $V$, so every weak cluster point $\bar u$ of $(u_n)$ satisfies $\nabla\bar u=\bar\nu$, and $\bar u$ is unique ($\nabla$ is injective on $V$); the whole sequence converges weakly in $V$ and, by Rellich, strongly in $L^2$.
+\end{proof}
+
+\section{Strong convergence}
+For $\Phi(x,\cdot)\in C^1$ with $g(x,0)=0$ put $T(x,a)=g(x,|a|)a/|a|$ ($T(x,0)=0$) and $h(x,t)=g(x,t)/t$; then $\partial F(q)=\{T(\cdot,q)\}$ and $\eta_{n+1}=T(\cdot,\nu_n)$, $\eta^*=T(\cdot,\nu^*)$, so
+$m_n=\int_\Omega\psi\big(x;\nu_n,\nu^*\big)\dx$ with $\psi(x;a,b)=(T(x,a)-T(x,b))\cdot(a-b)\ge0$.
+
+\begin{teo}\label{thm.B}
+Assume (S) and that $\Phi\in C^1$ in $t$ with $g(x,0)=0$.
+\begin{enumerate}
+\item[(a)] \emph{(superquadratic type)} Suppose that for a.e.\ $x$, $t\mapsto h(x,t)=g(x,t)/t$ is nondecreasing on $(0,\infty)$ and $h(x,t)\ge h_0(t)>0$ for a function $h_0$ independent of $x$. Then $\nu_n\to\bar\nu$ strongly in $H$, hence $u_n\to\bar u$ strongly in $H^1_0(\Omega)$.
+\item[(b)] \emph{(sub-quadratic power)} Let $\Phi=|\xi|^p/p$ with $1<p<2$. Then $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ strongly in $L^p(\Omega)^2$, i.e.\ $u_n\to\bar u$ strongly in $W^{1,p}_0(\Omega)$; also $u_n\to\bar u$ in $L^2(\Omega)$ (Theorem~\ref{thm.A}).
+\end{enumerate}
+In both cases the limit is the (unique, if $\Phi$ is strictly convex) solution of \eqref{P}.
+\end{teo}
+Case (a) contains $t^p/p$ ($p\ge2$), $t^p/p+a(x)t^q/q$ with $p,q\ge2$, $a\ge0$, $t^2\log(1+t)$, and $e^t-1-t$, all without $\Delta_2$/$\nabla_2$ conditions. For $\Phi=t^p/p$, $p\ge2$, it is the convergence $u_n\to u$ in $H^1_0$ claimed from Glowinski's theorem.
+
+\begin{proof}
+Apply \eqref{lyap} with the saddle point $(\bar\nu,\bar\eta)$ from Theorem~\ref{thm.A}: $\int_\Omega\psi(x;\nu_n,\bar\nu)\dx=m_n\to0$.
+
+(a) Write $T(a)=h(|a|)a$. A direct computation gives the identity
+$\psi(a,b)=\tfrac12\big(h(|a|)+h(|b|)\big)|a-b|^2+\tfrac12\big(h(|a|)-h(|b|)\big)\big(|a|^2-|b|^2\big)$, whose last term is $\ge0$ because $h$ is nondecreasing. As $\max\{|a|,|b|\}\ge|a-b|/2$, we get $\psi(x;a,b)\ge\frac12h(x,|a-b|/2)\,|a-b|^2$. Let $e_n=\nu_n-\bar\nu$ and $\delta>0$. On $\{|e_n|>\delta\}$, $\psi\ge\frac12h_0(\delta/2)|e_n|^2$, so
+\[
+\int|e_n|^2\le\delta^2|\Omega|+\frac{2}{h_0(\delta/2)}\,m_n ,
+\]
+and $\limsup\|e_n\|^2\le\delta^2|\Omega|$ for every $\delta$. Thus $\nu_n\to\bar\nu$ in $H$, $\nabla u_n=s_n+\nu_n\to\bar\nu=\nabla\bar u$ in $H$.
+
+(b) For $1<p\le2$ the classical inequality $\psi(a,b)\ge(p-1)(|a|+|b|)^{p-2}|a-b|^2$ holds. By H\"older with exponents $2/p$ and $2/(2-p)$,
+$\int|e_n|^p\le\big(\int(|a|+|b|)^{p-2}|e_n|^2\big)^{p/2}\big(\int(|\nu_n|+|\bar\nu|)^p\big)^{1-p/2}\le C\,m_n^{p/2}\to0$ since $(\nu_n)$ is bounded in $L^2\subset L^p$. The remaining claims follow as in (a).
+\end{proof}
+
+\section{When does (S) hold? Lieberman's conditions}\label{sec.lieberman}
+Assumption (S) is a regularity statement, and it is the place where growth conditions of $\Delta_2/\nabla_2$ type enter. The natural class is Lieberman's generalisation of the Ladyzhenskaya--Ural'tseva conditions: $g\in C^1(0,\infty)$, $g(0)=0$ and
+\begin{equation}\label{Lieb}
+0<\delta\le\frac{t\,g'(t)}{g(t)}\le g_0<\infty\qquad\text{for all }t>0 ,
+\end{equation}
+which for $\Phi=t^p/p$ reads $\delta=g_0=p-1$ and implies $\Delta_2$ and $\nabla_2$ for $\Phi$ (indices between $1+\delta$ and $1+g_0$). Under \eqref{Lieb}, for operators $-\operatorname{div}\big(g(|\nabla u|)\nabla u/|\nabla u|\big)=f$ with $f\in L^\infty$, $\partial\Omega$ of class $C^{1,\beta}$ and homogeneous Dirichlet data, G.~Lieberman's theory (\emph{The natural generalization of the natural conditions of Ladyzhenskaya and Ural'tseva for elliptic equations}, Comm.\ PDE \textbf{16} (1991), 311--361; the exact hypotheses, in particular on the boundary and on $x$-dependence, must be checked in the paper before citing) gives $u\in C^{1,\alpha}(\overline\Omega)$. Hence $\nabla u\in L^\infty$, and (S) holds (see the discussion after Assumption~(S)). Consequently:
+\begin{itemize}
+\item Theorem~\ref{thm.A} applies to all $G$ satisfying \eqref{Lieb} (and, for $x$-dependent $G(x,t)$, uniformly in $x$ with H\"older dependence on $x$ as required in Lieberman's work): $p$-Laplacian ($p>1$), $p$-$q$-Laplacian with $a(x)$ regular, $t^p\log^a(1+t)$ with $p>1$ and $a$ in the range where \eqref{Lieb} holds (to be checked case by case).
+\item Since $(g(t)/t)'=(g'(t)-g(t)/t)/t$, the monotonicity of $h=g/t$ used in Theorem~\ref{thm.B}(a) is $t g'(t)/g(t)\ge1$, i.e.\ $\delta\ge1$ (``$p\ge2$ type''); the case $\delta<1$ contains the sub-quadratic behaviour of Theorem~\ref{thm.B}(b) when $\Phi$ is a pure power.
+\item $e^t-1-t$ and $e^t-1$ violate the upper bound in \eqref{Lieb} ($t\,g'/g\to\infty$, no $\Delta_2$), and $e^t-1$ also violates $g(0)=0$. For them (S) is not available from this theory: the continuous convergence statement is open, although Theorem~\ref{thm.A} still holds whenever (S) is assumed, and the discrete statement holds without any regularity.
+\item Two-phase energies $t^p/p+a(x)t^q/q$ with $a\ge0$ vanishing on a region: Lieberman's theory does not apply (no uniform ellipticity ratio), but the double-phase regularity theory of Colombo--Mingione (\emph{Regularity for double phase variational problems}, ARMA \textbf{215} (2015); see also Baroni--Colombo--Mingione, Calc.\ Var.\ 2018) gives H\"older continuity of the gradient of local minimisers when $a\in C^{0,\alpha}$ and $q$ is not too far from $p$ (conditions of the type $q\le p+\alpha$, or $q/p\le1+\alpha/n$; exact statements to be checked). Two points must be checked to get (S): (i) $a$ must be H\"older, so an indicator function of a sector is not covered, whereas e.g.\ $a=\operatorname{dist}(x,\text{sector})^{\alpha}$ is; (ii) those results are \emph{interior}, while (S) needs $u\in H^1_0$ and $|\nabla u|^{q-1}\in L^2$ up to the boundary (boundary versions or global gradient bounds, e.g.\ for smooth domains with zero boundary data, have to be found in the literature or assumed).
+\end{itemize}
+
+\section{Remarks}
+\begin{remark}[What this says about $p<2$]
+For $1<p<2$, $F$ is finite and continuous on $H$, and (S) holds if and only if the weak solution $u\in W^{1,p}_0$ of \eqref{P} belongs to $H^1_0$ (if $u\in H^1_0$ it is the minimiser over $H^1_0$, by density of $H^1_0$ in $W^{1,p}_0$; the multiplier exists because $F$ is continuous, and $\eta^*=|\nabla u|^{p-2}\nabla u\in L^2$ automatically). Under this condition the iteration converges as in Theorems~\ref{thm.A} and~\ref{thm.B}(b): the restriction $p\ge2$ of the original statement is not needed for the algorithm; what is needed is a Hilbert-space saddle point. In particular $u_n\to u$ in $L^2$ (weakly in $H^1_0$, strongly in $W^{1,p}_0$). Typically $u\in H^1_0$ for bounded $f$ on smooth or convex domains (Lipschitz regularity), which should be checked/cited. For $p>2$ the situation is different: $F=+\infty$ on $L^2\setminus L^p$ and (S) needs $\nabla u\in L^{2p-2}$, so it \emph{is} a regularity requirement (possibly obtainable from second-order regularity results of Cianchi--Maz'ya type for convex domains; to be checked).
+\textbf{What remains open} is the case where (S) fails, e.g.\ $1<p<2$ and $u\notin H^1_0$. Then $\mathcal L_r$ has no saddle point in $V\times H\times H$ while the iterates $u_n\in H^1_0$ still exist, with $\inf_{H^1_0}J=\min_{W^{1,p}_0}J$; the question is whether $u_n\to u$ in $W^{1,p}_0$ or in $L^2$ anyway. Our argument does not cover it.
+\end{remark}
+\begin{remark}[Discrete level]
+The proof of Theorem~\ref{thm.A} uses only convexity, so it applies verbatim to the finite element problem: $V_h=\{P_1$ functions vanishing on $\partial\Omega\}$, $H_h=$ piecewise constant fields, $F_h(q)=\sum_T|T|\Phi(x_T,|q_T|)$ (finite everywhere, hence continuous). If moreover $\Phi(x_T,t)/t\to\infty$ as $t\to\infty$ for every $T$ (superlinear growth: true for $t^p/p$, $p>1$, for $p$-$q$ and two-phase energies for $e^t-1$ and $t^p\log^a(1+t)$), the discrete energy is coercive and has a minimiser, the Euler--Lagrange equation holds with a multiplier $\eta_h\in H_h$ (continuity of $F_h$), and a saddle point exists: (S) is automatic. Without coercivity (e.g.\ $\Phi(t)=t$, large $f$) no minimiser need exist. In finite dimension weak and strong convergence coincide. Hence for every fixed mesh, every $r>0$ and every convex $\Phi$ with superlinear growth (including $t^p/p$ for all $p>1$ and $e^t-1$), the discrete iteration converges to the discrete solution; this is what is observed in the experiments. This statement says nothing about the dependence of the speed on $h$, $p$ or $r$.
+\end{remark}
+\begin{remark}[Literature at the discrete level]
+For the $p(x)$-Laplacian ($p\le2$), L.~Del Pezzo and S.~Mart\'inez, \emph{The decomposition-coordination method for the $p(x)$-Laplacian}, arXiv:1401.2442, prove convergence of ALG2 for a discontinuous Galerkin discretisation by applying \cite[Ch.~VI, Thm.~4.1 and 5.1]{Glowinski} in finite dimension, where $F$ is finite and G\^ateaux differentiable on the whole of $H$ and satisfies $F(q)/|q|\to\infty$ (their hypotheses (H1)--(H4)); their argument carries over to any convex $\Phi$ with superlinear growth. The finite-dimensional statement of Remark above is the same result, proved here directly.
+\end{remark}
+\begin{remark}[$\rho\ne r$]
+For multiplier steps $\eta_{n+1}=\eta_n+\rho s_n$ with $\rho\ne r$ the Lyapunov functional must be modified (this is where a condition like $\rho<\frac{1+\sqrt5}2r$ appears); we only treated $\rho=r$, the case of the algorithm used in practice.
+\end{remark}
+\begin{remark}[Relation with Glowinski's theorem]
+Our proof gives, for a general convex $F$, \emph{weak} convergence of $(\nu_n,\eta_n)$ and strong convergence only under a uniform-monotonicity property of $F$ (Theorem~\ref{thm.B}). The hypotheses of \cite[Ch.~VI, Thm.~5.1]{Glowinski} (as summarised in the literature: $F$ convex and G\^ateaux differentiable, $F(q)/\|q\|\to\infty$, closed range of $B$) must be compared with ours; we do not claim that the statement ``saddle point + injectivity of $B$ $\Rightarrow$ strong convergence'' is false in general, only that our argument does not give it.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem{Glowinski} R.~Glowinski, \emph{Numerical Methods for Nonlinear Variational Problems}, Springer, 1984, Chapter VI (hypotheses and numbering to be checked).
+\bibitem{DPM} L.~M.~Del Pezzo, S.~Mart\'inez, \emph{The decomposition-coordination method for the $p(x)$-Laplacian}, arXiv:1401.2442 (2014).
+\end{thebibliography}
+\end{document}

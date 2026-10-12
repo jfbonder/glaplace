@@ -157,9 +157,13 @@ pytest -q
 
 ## Theory: what is and what is not proved
 
-- **Discrete problem (fixed mesh).** The iteration above is the two-block ADMM for $\min_{u,\nu}\ \sum_T|T|\,G(x_T,|\nu_T|)-F\cdot u$ s.t. $\nabla u=\nu$, i.e. a convex problem in finite dimension where $\nabla$ is injective on the free nodes. Standard ADMM theory (Eckstein–Bertsekas; see e.g. Boyd et al., 2011) gives convergence of the iterates for every $r>0$ as soon as a saddle point exists, and the numerical experiments agree (also with $p<2$ and with $G$ without $\Delta_2$). *This remark is not written in the repo as a theorem; it should be double-checked and cited properly.*
-- **Continuous problem.** For $G=t^p/p$ the convergence of the algorithm in $W^{1,p}$ follows from Glowinski's theorem (R. Glowinski, *Numerical Methods for Nonlinear Variational Problems*, Ch. VI; Fortin–Glowinski) when $p\ge2$ (hypotheses to be re-checked against the book). The proof for a general Young function $G$ (Orlicz, and Musielak–Orlicz for $G(x,t)$) **is not done yet in this repo** — it is the next step of the project; the code is only intended to explore it numerically.
-- Convergence rates of the finite-element approximation for general $G$ (only observed here: order 2 in $L^2$, 1 in $H^1$ for smooth $G$ on smooth solutions) are not proved.
+A working note with complete proofs is in [`theory/convergence_note.pdf`](theory/convergence_note.pdf) (LaTeX source and the referee report in the same folder). **It is a draft written from scratch (not copied from Glowinski's book) and must be checked by the authors.** Summary:
+
+- **Continuous level, general Young function.** Setting: $V=H^1_0$, $H=L^2(\Omega)^2$, $r>0$, $ho=r$. If the Lagrangian has a saddle point in $V\times H\times H$ (assumption (S): the solution $u$ is in $H^1_0$ and its flux is in $L^2$, e.g. $\nabla u\in L^\infty$), then a Lyapunov argument (only convexity of $\int G$ is used: no $\Delta_2$, no $\nabla_2$, no $p\ge2$) gives $\|\nabla u_n-\nu_n\|\to0$, $\|\nu_n-\nu_{n-1}\|\to0$, weak convergence of $(\nu_n,\eta_n)$, weak convergence of $u_n$ in $H^1_0$ and strong in $L^2$.
+- **Strong convergence** (in $H^1_0$) if $g(x,t)/t$ is nondecreasing in $t$ (covers $t^p/p$, $p\ge2$, $p$-$q$ and two-phase with $p,q\ge2$, $t^2\log(1+t)$, $e^t-1-t$) and, for $1<p<2$, strong convergence in $W^{1,p}_0$ (and in $L^2$ for $u_n$).
+- **Case $p<2$.** For $1<p<2$, (S) holds iff the weak solution belongs to $H^1_0$, so the restriction $p\ge2$ of the original theorem is not needed for the algorithm. **Open:** convergence when (S) fails.
+- **Discrete level (what the code does).** For fixed mesh, every $r>0$ and every convex $G$ with superlinear growth the iteration converges (same proof in finite dimension; compare Del Pezzo–Martínez, [arXiv:1401.2442](https://arxiv.org/abs/1401.2442), for $p(x)$). Nothing is claimed about the dependence of the speed on $h$, $p$ or $r$.
+- The finite-element error orders (2 in $L^2$, 1 in $H^1$ for smooth $G$ on smooth solutions) are only **observed**, not proved.
 
 ## Notes
 
