@@ -1,0 +1,5 @@
+r=1.0 it=6000 conv=False residual=1.43e-08 L2_rel=1.1204e-03 max_grad_core=1.55e-07
+r=3.0 it=2139 conv=True residual=9.99e-09 L2_rel=1.1204e-03 max_grad_core=1.08e-07
+r=10.0 it=650 conv=True residual=9.94e-09 L2_rel=1.1204e-03 max_grad_core=1.07e-07
+r=30.0 it=244 conv=True residual=9.76e-09 L2_rel=1.1205e-03 max_grad_core=9.95e-08
+r=100.0 it=529 conv=True residual=9.89e-09 L2_rel=1.1292e-03 max_grad_core=6.87e-09
