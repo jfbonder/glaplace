@@ -1,3 +1,0 @@
-p=1.5 max|u_num-u_closed|=2.637e-16 relative=3.164e-15
-p=2.0 max|u_num-u_closed|=8.674e-17 relative=3.469e-16
-p=4.0 max|u_num-u_closed|=5.260e-09 relative=8.836e-09

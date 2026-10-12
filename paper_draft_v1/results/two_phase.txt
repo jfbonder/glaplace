@@ -1,3 +1,0 @@
-4027 nodes: 60 it, converged=True, 1.7s, max u=0.70897
-  a = 1 everywhere: max u = 0.66650 (52 it)
-  a = 0 everywhere: max u = 0.99980 (64 it)

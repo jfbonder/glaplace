@@ -6,3 +6,10 @@ __pycache__/
 
 # bibliography (PDFs and notes) kept local
 biblio/
+
+# internal working documents (never published)
+paper/*.md
+paper/main_before_referee.tex
+paper_draft_v1/
+theory/
+*.tar.gz

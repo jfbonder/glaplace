@@ -1,9 +1,0 @@
-order n=10 nodes=121 it=163 conv=True L2_rel=7.1559e-04 gradL2_rel=2.8908e-02
-order n=20 nodes=441 it=190 conv=True L2_rel=1.7704e-04 gradL2_rel=1.4439e-02
-order n=40 nodes=1681 it=208 conv=True L2_rel=4.4134e-05 gradL2_rel=7.2175e-03
-order n=80 nodes=6561 it=218 conv=True L2_rel=1.1025e-05 gradL2_rel=3.6085e-03
-r=1 it=5000 conv=False L2_rel=4.4131e-05
-r=10 it=1167 conv=True L2_rel=4.4134e-05
-r=30 it=396 conv=True L2_rel=4.4134e-05
-r=100 it=208 conv=True L2_rel=4.4134e-05
-r=300 it=516 conv=True L2_rel=4.4135e-05

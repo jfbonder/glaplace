@@ -157,12 +157,11 @@ pytest -q
 
 ## Theory: what is and what is not proved
 
-A working note with complete proofs is in [`theory/convergence_note.pdf`](theory/convergence_note.pdf) (LaTeX source and the referee report in the same folder). **It is a draft written from scratch (not copied from Glowinski's book) and must be checked by the authors.** Summary:
+The method is the decomposition–coordination (augmented Lagrangian, ADMM) scheme of Glowinski; the convergence theory, the examples where the key assumption (S) holds or fails, the discrete problem, the Lavrentiev phenomenon and the experiments are in [`paper/main.pdf`](paper/main.pdf) (LaTeX source and scripts in `paper/`). Summary:
 
-- **Continuous level, general Young function.** Setting: $V=H^1_0$, $H=L^2(\Omega)^2$, $r>0$, $ho=r$. If the Lagrangian has a saddle point in $V\times H\times H$ (assumption (S): the solution $u$ is in $H^1_0$ and its flux is in $L^2$, e.g. $\nabla u\in L^\infty$), then a Lyapunov argument (only convexity of $\int G$ is used: no $\Delta_2$, no $\nabla_2$, no $p\ge2$) gives $\|\nabla u_n-\nu_n\|\to0$, $\|\nu_n-\nu_{n-1}\|\to0$, weak convergence of $(\nu_n,\eta_n)$, weak convergence of $u_n$ in $H^1_0$ and strong in $L^2$.
-- **Strong convergence** (in $H^1_0$) if $g(x,t)/t$ is nondecreasing in $t$ (covers $t^p/p$, $p\ge2$, $p$-$q$ and two-phase with $p,q\ge2$, $t^2\log(1+t)$, $e^t-1-t$) and, for $1<p<2$, strong convergence in $W^{1,p}_0$ (and in $L^2$ for $u_n$).
-- **Case $p<2$.** For $1<p<2$, (S) holds iff the weak solution belongs to $H^1_0$, so the restriction $p\ge2$ of the original theorem is not needed for the algorithm. **Open:** convergence when (S) fails.
-- **Discrete level (what the code does).** For fixed mesh, every $r>0$ and every convex $G$ with superlinear growth the iteration converges (same proof in finite dimension; compare Del Pezzo–Martínez, [arXiv:1401.2442](https://arxiv.org/abs/1401.2442), for $p(x)$). Nothing is claimed about the dependence of the speed on $h$, $p$ or $r$.
+- **Continuous level.** Assumption (S): the augmented Lagrangian has a saddle point in $H^1_0\times L^2\times L^2$ (the solution $u$ is in $H^1_0$ with flux in $L^2$, e.g. $\nabla u\in L^\infty$). Under (S) and convexity of $\int G$ only, the iteration converges weakly; strong convergence holds in the cases stated in the paper (including $1<p<2$ in $W^{1,p}_0$). Without (S) the iterates are unbounded.
+- **Discrete level (what the code does).** For a fixed mesh, every $r>0$ and every convex $G$ with superlinear growth, the iteration converges.
+- **Lavrentiev phenomenon.** For some $G(x,\cdot)$ (e.g. double phase with large $q-p$) conforming finite elements need not approximate the continuous minimiser.
 - The finite-element error orders (2 in $L^2$, 1 in $H^1$ for smooth $G$ on smooth solutions) are only **observed**, not proved.
 
 ## Notes

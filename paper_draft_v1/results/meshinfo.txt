@@ -1,5 +1,0 @@
-h_target=0.2 nodes=88 elems=143 h_max=0.2884 h_mean=0.2271
-h_target=0.1 nodes=362 elems=661 h_max=0.1362 h_mean=0.1052
-h_target=0.05 nodes=1452 elems=2774 h_max=0.0625 h_mean=0.0512
-h_target=0.025 nodes=5809 elems=11366 h_max=0.0313 h_mean=0.0253
-h_target=0.0125 nodes=23227 elems=45946 h_max=0.0161 h_mean=0.0126
