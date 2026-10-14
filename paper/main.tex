@@ -106,8 +106,8 @@ whose width is a rigorous upper bound for the gap (Corollary~\ref{cor:bracket}).
 The experiments of Section~\ref{sec:numerics} illustrate both halves of the theory. On smooth problems with exact solutions, the method converges with the expected orders for a wide range of integrands, including several that are not covered by Glowinski's theorem. On the standard Lavrentiev examples, namely Zhikov-type $p(x)$ and two-phase checkerboards and a double phase energy with the weight of Esposito, Leonetti and Mingione, we compute guaranteed brackets on meshes with up to $1.6\times10^6$ unknowns and compare them with the results of \cite{BalciOrtnerStorn2022}.
 
 \subsection*{What is classical and what is new}
-The algorithm and its convergence theory under uniform convexity are due to Glowinski \cite[Ch.~VI]{Glowinski1984ChVI}, and so are several ingredients of our proofs: the Lyapunov inequality behind Theorem~\ref{thm:A} is \cite[Ch.~VI, (5.25)]{Glowinski1984ChVI}, of which our identity \eqref{eq:lyap} is the equality form for $\rho=r$; the weak convergence of the whole multiplier sequence by Opial's argument is \cite[Ch.~VI, \S7]{Glowinski1984ChVI}; and the existence of discrete saddle points is \cite[Ch.~VI, \S4.2]{Glowinski1984ChVI}. The convergence of ADMM in finite dimensions is \cite[Thm.~8]{EcksteinBertsekas1992}, and the convergence of CR energies to $\mW$ is \cite[Thm.~1]{BalciOrtnerStorn2022}. The generalization of the Marini representation to nonlinear convex problems, that is, the equivalence of the CR method with a Raviart--Thomas mixed method with one-point quadrature and the absence of a discrete duality gap, is due to Carstensen and Liu \cite[Thm.~3.1]{CarstensenLiu2015}, for an autonomous integrand of quadratic growth arising in optimal design; see also \cite{Bartels2021} for general convex problems, \cite[Prop.~2.37]{BalciKaltenbach2023} for the $p(\cdot)$-Laplacian and, for the linear case, \cite{Marini1985,ArnoldBrezzi1985}. % CHECK (authors): Bartels2021 not read; Marini1985, ArnoldBrezzi1985 data from memory
-We give complete proofs wherever the setting (arbitrary Young integrands, nonsmooth energies, no growth conditions, CR spaces) or the exact hypotheses matter.
+The algorithm and its convergence theory under uniform convexity are due to Glowinski \cite[Ch.~VI]{Glowinski1984ChVI}, and so are several ingredients of our proofs: the Lyapunov inequality behind Theorem~\ref{thm:A} is \cite[Ch.~VI, (5.25)]{Glowinski1984ChVI}, of which our identity \eqref{eq:lyap} is the equality form for $\rho=r$; the characterization of saddle points and their independence of $r$ (Proposition~\ref{prop:saddle}) is \cite[Ch.~VI, Thm.~2.1]{Glowinski1984ChVI}; the weak convergence of the whole multiplier sequence by Opial's argument is \cite[Ch.~VI, \S7]{Glowinski1984ChVI}; and the existence of discrete saddle points is \cite[Ch.~VI, \S4.2]{Glowinski1984ChVI}. The convergence of ADMM in finite dimensions is \cite[Thm.~8]{EcksteinBertsekas1992}, and the convergence of CR energies to $\mW$ is \cite[Thm.~1]{BalciOrtnerStorn2022}. The generalization of the Marini representation to nonlinear convex problems, that is, the equivalence of the CR method with a Raviart--Thomas mixed method with one-point quadrature and the absence of a discrete duality gap, is due to Carstensen and Liu \cite[Thm.~3.1]{CarstensenLiu2015}, for an autonomous integrand of quadratic growth arising in optimal design; see also \cite{Bartels2021} for general convex problems, \cite[Prop.~2.37]{BalciKaltenbach2023} for the $p(\cdot)$-Laplacian and, for the linear case, \cite{Marini1985,ArnoldBrezzi1985}. % CHECK (authors): Bartels2021 not read; Marini1985, ArnoldBrezzi1985 data from memory
+Standard facts of convex analysis are collected, with references and without proofs, in Section~\ref{ssec:prelim}, and results available in the literature are cited rather than proved. We give complete proofs wherever the setting (arbitrary Young integrands, nonsmooth energies, no growth conditions, CR spaces) or the exact hypotheses matter.
 
 The remaining results are, as far as we know, new: the convergence theory under (S) alone (Theorems~\ref{thm:A} and~\ref{thm:B}), which covers exponents below $2$, measurable coefficients and integrands without the $\Delta_2$ condition; the account of when (S) holds and how it relates to the Lavrentiev gap (Section~\ref{sec:S}); the convergence of the discrete iteration for every $r$ without any regularity (Theorem~\ref{thm:C}); and, above all, the guaranteed lower bound for $\mW$ at every CR iterate, the resulting bracket and the saddle-point diagnostic (Theorems~\ref{thm:D} and~\ref{thm:diag}, Corollary~\ref{cor:bracket}), together with the experiments that use them.
 
@@ -118,14 +118,27 @@ Several questions remain open. Assumption~(S) is a regularity property of the so
 Section~\ref{sec:method} introduces the method in an abstract Hilbert space setting, explains what Glowinski's theorem covers, and proves Theorems~\ref{thm:A} and~\ref{thm:B}. Section~\ref{sec:S} reviews when (S) is known to hold and separates it from the absence of a Lavrentiev gap. Section~\ref{sec:discrete} introduces the P1 and CR discretizations and shows that the discrete iteration always converges. Section~\ref{sec:lavrentiev} turns to consistency: it shows that P1 energies are upper bounds for $\mH$, proves the lower bound of Theorem~\ref{thm:D} and the bracket, and studies the size of discrete saddle points. Section~\ref{sec:numerics} reports the experiments, and Section~\ref{sec:conclusions} collects conclusions and open problems.
 
 \subsection*{Notation}
-We write $(\cdot,\cdot)$ and $\norm\cdot$ for the inner product and the norm of $L^2(\Omega)$ or $L^2(\Omega;\R^d)$; other norms carry a subscript. For a convex function $\Psi\colon X\to(-\infty,+\infty]$ on a Hilbert space, $\dom\Psi=\{\Psi<\infty\}$ and $\partial\Psi(q)=\{\zeta\in X:\Psi(q')\ge\Psi(q)+(\zeta,q'-q)\ \forall q'\in X\}$. For a convex function $\gamma$ on $[0,\infty)$, $\gamma'_\pm$ denote its one-sided derivatives and $\gamma^*(s)=\sup_{t\ge0}(st-\gamma(t))$, $s\ge0$, its conjugate. Weak convergence is denoted by $\weak$. The boundary datum is always called $\psi$, and $\mW$ and $\mH$ denote the infima of $J$ over finite-energy $W^{1,1}$ functions and over Lipschitz functions with boundary datum $\psi$ (see Sections~\ref{ssec:SvsGap} and~\ref{sec:lavrentiev} for the precise definitions).
+We write $(\cdot,\cdot)$ and $\norm\cdot$ for the inner product and the norm of $L^2(\Omega)$ or $L^2(\Omega;\R^d)$; other norms carry a subscript. The notation of convex analysis (domains, subdifferentials, conjugates) is recalled in Section~\ref{ssec:prelim}. Weak convergence is denoted by $\weak$. The boundary datum is always called $\psi$, and $\mW$ and $\mH$ denote the infima of $J$ over finite-energy $W^{1,1}$ functions and over Lipschitz functions with boundary datum $\psi$ (see Sections~\ref{ssec:SvsGap} and~\ref{sec:lavrentiev} for the precise definitions).
 
 %======================================================================
 \section{The method and its convergence: from the \texorpdfstring{$p$}{p}-Laplacian to Musielak--Orlicz energies}\label{sec:method}
 
-This section develops the convergence theory of the method at the continuous level. We first set up an abstract Hilbert space framework (Sections~\ref{ssec:setting}--\ref{ssec:algorithm}), then recall what Glowinski's classical theorem covers and why it stops at $p=2$ (Section~\ref{ssec:glowinski}), and finally prove weak convergence under (S) for every convex Young integrand (Theorem~\ref{thm:A}) and strong convergence for Musielak--Orlicz integrands with Lieberman's structure (Theorem~\ref{thm:B}).
+This section develops the convergence theory of the method at the continuous level. We first recall the facts from convex analysis that we use (Section~\ref{ssec:prelim}) and set up an abstract Hilbert space framework (Sections~\ref{ssec:setting}--\ref{ssec:algorithm}), then recall what Glowinski's classical theorem covers and why it stops at $p=2$ (Section~\ref{ssec:glowinski}), and finally prove weak convergence under (S) for every convex Young integrand (Theorem~\ref{thm:A}) and strong convergence for Musielak--Orlicz integrands with Lieberman's structure (Theorem~\ref{thm:B}).
 
-\subsection{Setting}\label{ssec:setting}
+\subsection{Preliminaries from convex analysis}\label{ssec:prelim}
+Let $X$ be a real Hilbert space with inner product $(\cdot,\cdot)$. A function $\Psi\colon X\to(-\infty,+\infty]$ is \emph{proper} if its domain $\dom\Psi=\{\Psi<\infty\}$ is nonempty, \emph{convex} if $\Psi(sq+(1-s)q')\le s\Psi(q)+(1-s)\Psi(q')$ for $s\in[0,1]$, and \emph{lower semicontinuous} (l.s.c.) if its sublevel sets are closed. Its \emph{subdifferential} at $q$ is $\partial\Psi(q)=\{\zeta\in X:\Psi(q')\ge\Psi(q)+(\zeta,q'-q)\ \forall q'\in X\}$, which is empty if $q\notin\dom\Psi$, and its \emph{conjugate} is $\Psi^*(\zeta)=\sup_{q\in X}((\zeta,q)-\Psi(q))$. For a convex function $\gamma$ on $[0,\infty)$, $\gamma'_\pm$ denote its one-sided derivatives and $\gamma^*(s)=\sup_{t\ge0}(st-\gamma(t))$, $s\ge0$, its (monotone) conjugate. We use the following standard facts.
+\begin{enumerate}[label=(P\arabic*),leftmargin=2.6em]
+\item\label{P:wlsc} A convex l.s.c.\ function on $X$ is weakly l.s.c.\ \cite[Ch.~I, Cor.~2.2]{EkelandTemam1999}, % CHECK (authors): locator from memory
+and a convex function that is bounded above on a neighborhood of a point is continuous at that point \cite[Ch.~I, \S2]{EkelandTemam1999}. % CHECK (authors): locator from memory
+\item\label{P:mono} $\partial\Psi$ is monotone, $(\zeta-\zeta',q-q')\ge0$ for $\zeta\in\partial\Psi(q)$, $\zeta'\in\partial\Psi(q')$ (add the two subgradient inequalities); if $\Psi$ is proper, convex and l.s.c., $\partial\Psi$ is maximal monotone \cite{Rockafellar1970max}.
+\item\label{P:FY} \emph{Fenchel--Young.} $\Psi(q)+\Psi^*(\zeta)\ge(\zeta,q)$ whenever $\Psi$ is proper, with equality if and only if $\zeta\in\partial\Psi(q)$ \cite[Ch.~I, Prop.~5.1]{EkelandTemam1999}, \cite[Thm.~23.5]{Rockafellar1970}. % CHECK (authors): both locators from memory; ET I.5.1 confirmed only via [BalciKaltenbach2023, ref. 34], R. Thm 23.5 only via [CarstensenLiu2015, ref. 25]
+\item\label{P:calc} \emph{Calculus.} $q_0$ minimizes $\Psi$ if and only if $0\in\partial\Psi(q_0)$. If $\Psi_1,\Psi_2$ are convex and $\Psi_1$ is finite and continuous at a point of $\dom\Psi_2$, then $\partial(\Psi_1+\Psi_2)=\partial\Psi_1+\partial\Psi_2$ \cite[Ch.~I, Prop.~5.6]{EkelandTemam1999}; in finite dimensions, if $\Psi$ is finite and $A$ is linear, $\partial(\Psi\circ A)=A^*\partial\Psi\circ A$ \cite[Thm.~23.9]{Rockafellar1970}. % CHECK (authors): ET I.5.6 from memory; R. Thm 23.9 confirmed only via [BartelsMilicevic2017, Rem. 3.1]
+In particular, if $\Psi$ is proper, convex and l.s.c., $r>0$ and $w\in X$, then $\Psi+\frac r2\norm{\cdot-w}^2$ has a unique minimizer $p$ (the proximal point of $\Psi/r$ at $w$), characterized by $r(w-p)\in\partial\Psi(p)$ \cite[\S12.4 and Ch.~16]{BauschkeCombettes2017}. % CHECK (authors): locator from memory
+\item\label{P:radial} \emph{Radial functions.} If $\gamma\colon[0,\infty)\to[0,\infty)$ is finite, convex and nondecreasing with $\gamma(0)=0$, then $\phi(\xi)=\gamma(\abs\xi)$ is convex on $\R^d$ and $\phi^*(\zeta)=\gamma^*(\abs\zeta)$ \cite[Thm.~15.3]{Rockafellar1970}; its subdifferential is described in Lemma~\ref{lem:subdiff-Phi} below. % CHECK (authors): locator from memory
+\item\label{P:integral} \emph{Integral functionals.} Let $\Phi\colon\Omega\times\R^d\to[0,\infty)$ be measurable in $x$, convex and continuous in $\xi$, with $\Phi(x,0)=0$, and $I(q)=\int_\Omega\Phi(x,q)\dx$ on $L^2(\Omega;\R^d)$. Then $I^*(\eta)=\int_\Omega\Phi^*(x,\eta)\dx$ \cite[Thm.~2]{Rockafellar1968}, % CHECK (authors): theorem number from memory
+and hence, by \ref{P:FY} applied to $I$ and pointwise, $\eta\in\partial I(q)$ if and only if $q\in\dom I$ and $\eta(x)\in\partial\Phi(x,\cdot)(q(x))$ for a.e.\ $x$.
+\end{enumerate}
+
 \begin{definition}[Young integrand]\label{def:young}
 A function $G\colon\Omega\times[0,\infty)\to[0,\infty)$ is a \emph{Young integrand} if $G(\cdot,t)$ is measurable for every $t\ge0$ and, for a.e.\ $x\in\Omega$, $G(x,\cdot)$ is finite, convex and nondecreasing with $G(x,0)=0$.
 \end{definition}
@@ -133,11 +146,25 @@ A finite convex nondecreasing function on $[0,\infty)$ that vanishes at $0$ is c
 \[
 \Phi(x,\xi)=G(x,\abs\xi),\qquad g(x,t)=\partial_t^+G(x,t)\quad(t\ge0).
 \]
-Then $\Phi(x,\cdot)$ is convex on $\R^d$, and $g(x,\cdot)$ is nondecreasing, finite and nonnegative, with $g(x,0)=\inf_{s>0}G(x,s)/s$. No growth condition ($\Delta_2$, $\nabla_2$ or superlinearity) is assumed in this section. Let $V=H^1_0(\Omega)$ with $\norm{v}_V=\norm{\nabla v}$, $H=L^2(\Omega;\R^d)$, $f\in L^2(\Omega)$, and
+Then $\Phi(x,\cdot)$ is convex on $\R^d$ by \ref{P:radial}, and $g(x,\cdot)$ is nondecreasing, finite and nonnegative, with $g(x,0)=\inf_{s>0}G(x,s)/s$. The integrand is \emph{superlinear} if $G(x,t)/t\to\infty$ as $t\to\infty$, equivalently $g(x,t)\to\infty$; it satisfies $\Delta_2$ if $G(x,2t)\le KG(x,t)$; and it satisfies Lieberman's condition \cite[(1.1)$'$]{Lieberman1991} if $\delta\le tg'/g\le g_0$, see \eqref{eq:L} below, which implies $\Delta_2$ (see \eqref{eq:kcomp}). No growth condition ($\Delta_2$, $\nabla_2$ or superlinearity) is assumed in this section. The subdifferential of a radial function is elementary.
+
+\begin{lemma}[Subdifferential of $\Phi$]\label{lem:subdiff-Phi}
+Let $\gamma\colon[0,\infty)\to[0,\infty)$ be finite, convex, nondecreasing, $\gamma(0)=0$, and $\phi(\xi)=\gamma(\abs\xi)$.
+\textup{(i)} $\partial\phi(0)=\{\zeta:\abs\zeta\le\gamma'_+(0)\}$.
+\textup{(ii)} If $\xi\ne0$ and $\gamma$ is differentiable at $\abs\xi$, then $\partial\phi(\xi)=\{\gamma'(\abs\xi)\xi/\abs\xi\}$.
+\textup{(iii)} If $\gamma\in C^1([0,\infty))$ with $\gamma'(0)=0$, then $\phi\in C^1(\R^d)$ and $\partial\phi(\xi)=\{T(\xi)\}$, $T(\xi):=\gamma'(\abs\xi)\xi/\abs\xi$, $T(0)=0$.
+\end{lemma}
+\begin{proof}
+(i) $\zeta\in\partial\phi(0)$ iff $\gamma(t)\ge\abs\zeta t$ for all $t\ge0$, iff $\abs\zeta\le\inf_{t>0}\gamma(t)/t=\gamma'_+(0)$. (ii)--(iii) A convex function differentiable at $\xi$ has $\partial\phi(\xi)=\{\nabla\phi(\xi)\}$ \cite[Thm.~25.1]{Rockafellar1970}; % CHECK (authors): locator from memory
+in (iii), $\phi(\xi)=o(\abs\xi)$ at $0$.
+\end{proof}
+
+\subsection{Setting}\label{ssec:setting}
+Let $V=H^1_0(\Omega)$ with $\norm{v}_V=\norm{\nabla v}$, $H=L^2(\Omega;\R^d)$, $f\in L^2(\Omega)$, and
 \[
 F(q)=\int_\Omega\Phi(x,q(x))\dx\in[0,+\infty]\quad(q\in H),\qquad J(v)=F(\nabla v)-(f,v)\quad(v\in V).
 \]
-The functional $F$ is convex, satisfies $F\ge0=F(0)$, and is lower semicontinuous on $H$ by Fatou's lemma applied along a.e.\ convergent subsequences; hence it is also weakly lower semicontinuous.
+The functional $F$ is convex, satisfies $F\ge0=F(0)$, and is lower semicontinuous on $H$ by Fatou's lemma applied along a.e.\ convergent subsequences; hence it is also weakly lower semicontinuous by \ref{P:wlsc}.
 
 \paragraph{Abstract structure.} We write $B=\nabla\colon V\to H$ and $\ell(v)=(f,v)$. Sections~\ref{ssec:saddle}--\ref{ssec:thmA} use only the following properties:
 \begin{enumerate}[label=(A\arabic*),leftmargin=2.8em]
@@ -154,41 +181,27 @@ The method is built on the augmented Lagrangian associated with the constraint $
 \]
 A triple $(u^*,\nu^*,\eta^*)$ is a saddle point if $\Lag(u^*,\nu^*,\mu)\le\Lag(u^*,\nu^*,\eta^*)\le\Lag(v,q,\eta^*)$ for all $(v,q,\mu)$, with the middle term finite. The next proposition characterizes saddle points by the optimality system of the problem.
 
-\begin{proposition}[Saddle points]\label{prop:saddle}
+\begin{proposition}[Saddle points {\cite[Ch.~VI, Thm.~2.1]{Glowinski1984ChVI}}]\label{prop:saddle}
 Assume \ref{A1}--\ref{A3}. $(u^*,\nu^*,\eta^*)$ is a saddle point of $\Lag$ if and only if
 \begin{equation}\label{eq:S}
 \nu^*=Bu^*,\qquad \eta^*\in\partial F(\nu^*),\qquad (\eta^*,Bw)=\ell(w)\quad\forall w\in V .
 \end{equation}
 In that case $F(\nu^*)<\infty$ and $u^*$ minimizes $J(v)=F(Bv)-\ell(v)$ over $V$. The set of saddle points does not depend on $r$.
 \end{proposition}
-\begin{proof}
-($\Leftarrow$) $\Lag(u^*,\nu^*,\mu)=F(\nu^*)-\ell(u^*)$ does not depend on $\mu$ and is finite. For $(v,q)$, the subgradient inequality $F(q)\ge F(\nu^*)+(\eta^*,q-\nu^*)$ and \eqref{eq:S} with $w=v-u^*$ give
-$\Lag(v,q,\eta^*)-\Lag(u^*,\nu^*,\eta^*)\ge(\eta^*,B(v-u^*))-\ell(v-u^*)+\frac r2\norm{Bv-q}^2\ge0$.
-
-($\Rightarrow$) The middle value is finite, so $F(\nu^*)<\infty$. The left inequality for all $\mu$ forces $Bu^*=\nu^*$. The right inequality with $(v,q)=(u^*+sw,\nu^*)$ reads $s[(\eta^*,Bw)-\ell(w)]+\frac{rs^2}2\norm{Bw}^2\ge0$ for $s\in\R$, whence $(\eta^*,Bw)=\ell(w)$. With $v=u^*$ and $q=\nu^*+s(q'-\nu^*)$, $q'\in\dom F$, $s\in(0,1)$, convexity gives $0\le s(F(q')-F(\nu^*))-s(\eta^*,q'-\nu^*)+\frac{rs^2}2\norm{q'-\nu^*}^2$; dividing by $s$ and letting $s\downarrow0$ gives $\eta^*\in\partial F(\nu^*)$. Finally, if \eqref{eq:S} holds, $J(v)-J(u^*)\ge(\eta^*,B(v-u^*))-\ell(v-u^*)=0$.
-\end{proof}
+Glowinski treats $\min_vF(Bv)+\mathcal G(v)$ with a convex, proper, l.s.c.\ $\mathcal G$; for $\mathcal G=-\ell$, his characterization \cite[Ch.~VI, (2.11)--(2.12)]{Glowinski1984ChVI} of saddle points (for which $F(\nu^*)-\ell(u^*)$ is finite) reads $\eta^*\in\partial F(\nu^*)$ and $(\eta^*,B(v-u^*))\ge\ell(v-u^*)$ for all $v\in V$, which together with $\nu^*=Bu^*$ is \eqref{eq:S}.
 
 \begin{assumption}\label{ass:S}
 The augmented Lagrangian $\Lag$ has a saddle point in $V\times H\times H$; equivalently, \eqref{eq:S} has a solution.
 \end{assumption}
-In the concrete case, (S) says that $J$ has a minimizer $u\in H^1_0(\Omega)$ whose \emph{flux} $\eta\in\partial F(\nabla u)$ belongs to $L^2(\Omega;\R^d)$ and satisfies $(\eta,\nabla w)=(f,w)$ for all $w\in H^1_0$. It is therefore a property of the solution, and not only of $G$; Section~\ref{sec:S} discusses when it holds. To work with (S) we need a pointwise description of $\partial F$, which the next two lemmas provide.
+In the concrete case, (S) says that $J$ has a minimizer $u\in H^1_0(\Omega)$ whose \emph{flux} $\eta\in\partial F(\nabla u)$ belongs to $L^2(\Omega;\R^d)$ and satisfies $(\eta,\nabla w)=(f,w)$ for all $w\in H^1_0$. It is therefore a property of the solution, and not only of $G$; Section~\ref{sec:S} discusses when it holds. To work with (S) we need a pointwise description of $\partial F$, which the next lemma provides together with Lemma~\ref{lem:subdiff-Phi}.
 
 \begin{lemma}[Pointwise description of $\partial F$]\label{lem:pointwise}
 Let $q\in\dom F$ and $\eta\in H$. Then $\eta\in\partial F(q)$ if and only if $\eta(x)\in\partial\Phi(x,\cdot)(q(x))$ for a.e.\ $x\in\Omega$.
 \end{lemma}
 \begin{proof}
-($\Leftarrow$) Integrate the pointwise inequality when $q'\in\dom F$. ($\Rightarrow$) Fix $z\in\Q^d$, $M\in\mathbb N$, $\Omega^z_M=\{x:\Phi(x,z)\le M\}$ and a measurable $A\subset\Omega^z_M$. Testing with $q'=q\mathbf 1_{\Omega\setminus A}+z\mathbf 1_A\in\dom F$ gives $\int_A[\Phi(x,z)-\Phi(x,q)-\eta\cdot(z-q)]\ge0$, so the integrand is $\ge0$ a.e.\ on $\Omega^z_M$, hence a.e.\ on $\Omega$. Taking the union of the null sets over $z\in\Q^d$ and using the continuity of $\Phi(x,\cdot)$ gives the claim.
+This is \ref{P:integral} with $I=F$, $\Phi$ being a Carath\'eodory integrand.
 \end{proof}
 
-\begin{lemma}[Subdifferential of $\Phi$]\label{lem:subdiff-Phi}
-Let $\gamma\colon[0,\infty)\to[0,\infty)$ be finite, convex, nondecreasing, $\gamma(0)=0$, and $\phi(\xi)=\gamma(\abs\xi)$.
-\textup{(i)} $\partial\phi(0)=\{\zeta:\abs\zeta\le\gamma'_+(0)\}$.
-\textup{(ii)} If $\xi\ne0$ and $\gamma$ is differentiable at $\abs\xi$, then $\partial\phi(\xi)=\{\gamma'(\abs\xi)\xi/\abs\xi\}$.
-\textup{(iii)} If $\gamma\in C^1([0,\infty))$ with $\gamma'(0)=0$, then $\phi\in C^1(\R^d)$ and $\partial\phi(\xi)=\{T(\xi)\}$, $T(\xi):=\gamma'(\abs\xi)\xi/\abs\xi$, $T(0)=0$.
-\end{lemma}
-\begin{proof}
-(i) $\zeta\in\partial\phi(0)$ iff $\gamma(t)\ge\abs\zeta t$ for all $t\ge0$, iff $\abs\zeta\le\inf_{t>0}\gamma(t)/t=\gamma'_+(0)$. (ii)--(iii): a convex function differentiable at $\xi$ has $\partial\phi(\xi)=\{\nabla\phi(\xi)\}$, and $\nabla\phi(\xi)=\gamma'(\abs\xi)\xi/\abs\xi$ for $\xi\ne0$; in (iii), $\phi(\xi)=o(\abs\xi)$ at $0$.
-\end{proof}
 Consequently, if $G(x,\cdot)\in C^1([0,\infty))$ with $g(x,0)=0$, then for $q\in\dom F$
 \begin{equation}\label{eq:dF-C1}
 \partial F(q)=\{T(\cdot,q)\}\ \text{ if } T(\cdot,q)\in H,\qquad \partial F(q)=\emptyset\ \text{ otherwise};\qquad T(x,\xi)=g(x,\abs\xi)\frac{\xi}{\abs\xi}.
@@ -215,7 +228,7 @@ Assume \ref{A1}--\ref{A3}. \textup{(i)} \eqref{eq:alg-u} has a unique solution. 
 \end{equation}
 \end{lemma}
 \begin{proof}
-(i) This is Riesz' theorem in $V$ with the inner product $r(Bv,Bw)$. (ii) The functional $\Psi_n(q)=F(q)-(\eta_n,q)+\frac r2\norm{Bu_n-q}^2$ is proper, convex, l.s.c., coercive and strictly convex, so it has a unique minimizer. The variational characterization follows by testing with $\nu+s(q-\nu)$ and letting $s\downarrow0$; the converse follows from the subgradient inequality and $\frac r2\norm{Bu_n-q}^2-\frac r2\norm{Bu_n-\nu}^2=-r(Bu_n-\nu,q-\nu)+\frac r2\norm{q-\nu}^2$. (iii) It suffices to insert $\eta_n+r(Bu_n-\nu_{n-1})=\eta_{n+1}+r(\nu_n-\nu_{n-1})$ into \eqref{eq:alg-u}.
+(i) This is Riesz' theorem in $V$ with the inner product $r(Bv,Bw)$. (ii) Up to a constant, the functional in \eqref{eq:alg-nu} is $F(q)+\frac r2\norm{q-w}^2$ with $w=Bu_n+\eta_n/r$, so \ref{P:calc} gives a unique minimizer $\nu$, characterized by $r(w-\nu)=\eta_n+r(Bu_n-\nu)\in\partial F(\nu)$. (iii) It suffices to insert $\eta_n+r(Bu_n-\nu_{n-1})=\eta_{n+1}+r(\nu_n-\nu_{n-1})$ into \eqref{eq:alg-u}.
 \end{proof}
 
 \begin{lemma}[The pointwise problem]\label{lem:pointwise-prox}
@@ -227,7 +240,8 @@ Let $\gamma$ and $\phi$ be as in Lemma~\ref{lem:subdiff-Phi}, $r>0$, $w\in\R^d$.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-(i) The function $\chi$ is continuous, strictly convex and coercive, and $\chi(t)>\chi(\abs w)$ for $t>\abs w$. Since $\abs{\xi-w}\ge\abs{\abs\xi-\abs w}$, we have $\phi(\xi)+\frac r2\abs{\xi-w}^2\ge\chi(\abs\xi)\ge\chi(\hat t)$, with equality at $\hat\xi$. (ii) This is the optimality condition $\chi'_+(\hat t)\ge0\ge\chi'_-(\hat t)$. (iii) If $\hat t=0$, we use Lemma~\ref{lem:subdiff-Phi}(i). If $\hat t>0$, let $\hat w=w/\abs w$ and $\lambda=r(\abs w-\hat t)\in[\gamma'_-(\hat t),\gamma'_+(\hat t)]$; for every $z$, by monotonicity and convexity of $\gamma$ (and $\gamma(0)=0\ge\gamma(\hat t)-\lambda\hat t$ when $\hat w\cdot z<0$), $\phi(z)\ge\gamma(\max\{\hat w\cdot z,0\})\ge\gamma(\hat t)+\lambda(\hat w\cdot z-\hat t)=\phi(\hat\xi)+\hat\eta\cdot(z-\hat\xi)$.
+(i) This is the formula for the proximal point of a function of the norm \cite[Ch.~24]{BauschkeCombettes2017}, % CHECK (authors): locator from memory
+applied to the even extension of $\gamma$, which is convex since $\gamma$ is nondecreasing. Directly: $\chi$ is strictly convex and coercive, $\chi(t)>\chi(\abs w)$ for $t>\abs w$, and $\phi(\xi)+\frac r2\abs{\xi-w}^2\ge\chi(\abs\xi)\ge\chi(\hat t)$ because $\abs{\xi-w}\ge\abs{\abs\xi-\abs w}$, with equality at $\hat\xi$. (ii) This is the optimality condition $\chi'_+(\hat t)\ge0\ge\chi'_-(\hat t)$ for the one-dimensional problem. (iii) This is the characterization of the minimizer in \ref{P:calc}.
 \end{proof}
 
 \begin{corollary}[Pointwise form of \eqref{eq:alg-nu}]\label{cor:pointwise-nu}
@@ -249,7 +263,7 @@ Before developing our own theory, we recall the classical convergence result and
 \item $F(q)/\norm q\to+\infty$ as $\norm q\to\infty$;
 \item $F=F_0+F_1$ with $F_0,F_1$ proper, convex, l.s.c., $F_0$ G\^ateaux differentiable and uniformly convex on bounded sets in the sense of \cite[(4.6)]{Glowinski1984ChVI}: for every $M$ there is a continuous strictly increasing $\delta_M$, $\delta_M(0)=0$, with $(F_0'(q)-F_0'(p),q-p)\ge\delta_M(\norm{q-p})$ for $\norm p,\norm q\le M$.
 \end{enumerate}
-Under these hypotheses, \cite[Thm.~5.1]{Glowinski1984ChVI} asserts that ALG2 with $0<\rho<\frac{1+\sqrt5}2r$ satisfies $u_n\to u$ strongly in $V$ and $\nu_n\to Bu$ strongly in $H$, and that $(\eta_n)$ is bounded, with multipliers as weak cluster points; by \cite[\S7]{Glowinski1984ChVI}, the whole sequence $(\eta_n)$ converges weakly. For linear $\Gamma$, as here, the range $0<\rho<2r$ is recorded in \cite[Rem.~5.1, \S6.3]{Glowinski1984ChVI}. In \cite[\S6.3]{Glowinski1984ChVI} the $s$-Laplacian is posed in $W^{1,s}_0\times L^s$, where the theorem ``cannot be applied'' for $s\ne2$, and it is treated after discretization. On $V=H^1_0$ and $H=L^2$, hypothesis (ii) is trivial, and (iii)--(iv) hold for a large class of integrands.
+Under these hypotheses, \cite[Thm.~5.1]{Glowinski1984ChVI} asserts that ALG2 with $0<\rho<\frac{1+\sqrt5}2r$ satisfies $u_n\to u$ strongly in $V$ and $\nu_n\to Bu$ strongly in $H$, and that $(\eta_n)$ is bounded, with multipliers as weak cluster points; by \cite[\S7]{Glowinski1984ChVI}, the whole sequence $(\eta_n)$ converges weakly. For linear $\Gamma$, as here, the range $0<\rho<2r$ is recorded in \cite[Rem.~5.1, \S6.3]{Glowinski1984ChVI}. Glowinski himself treats the $p$-Laplacian in its natural setting $V=W^{1,p}_0(\Omega)$, $H=L^p(\Omega)^d$ \cite[\S6.3]{Glowinski1984ChVI}; since these spaces are not Hilbert spaces for $p\ne2$, he observes that his convergence theorems do not apply to the continuous problem, but only to its finite element approximations, which are finite dimensional. We proceed differently: we keep $V=H^1_0(\Omega)$ and $H=L^2(\Omega)^d$ for every integrand, which is what the algorithm actually computes (the $u$-step is a Poisson problem), and pay for this with Assumption~(S). On $V=H^1_0$ and $H=L^2$, hypothesis (ii) is trivial, and (iii)--(iv) hold for a large class of integrands.
 
 \begin{lemma}[Glowinski's hypotheses on $H=L^2$]\label{lem:split}
 Let $G$ be a Young integrand.
@@ -301,15 +315,17 @@ Neither a growth condition nor the differentiability of $G$ is used. Whenever (S
 \]
 By $2(a-c,a-b)=\norm{a-c}^2+\norm{a-b}^2-\norm{b-c}^2$ and $rs_n=\eta_{n+1}-\eta_n$, the first term equals $\frac1{2r}(\norm{\eta_{n+1}-\eta^*}^2-\norm{\eta_n-\eta^*}^2)+\frac r2\norm{s_n}^2$ and the last one equals $\frac r2(\norm{\nu_n-\nu^*}^2-\norm{\nu_{n-1}-\nu^*}^2)+\frac r2\norm{\nu_n-\nu_{n-1}}^2$. This is \eqref{eq:lyap}.
 
-\emph{Step 2: signs.} By \eqref{eq:eta-in-dF}, \eqref{eq:S} and the monotonicity of $\partial F$, $m_n\ge0$. Similarly, $\eta_n\in\partial F(\nu_{n-1})$ gives $r(s_n,\nu_n-\nu_{n-1})=(\eta_{n+1}-\eta_n,\nu_n-\nu_{n-1})\ge0$. Summing \eqref{eq:lyap} yields the bounds and the summability, and $Bu_n=s_n+\nu_n$ is bounded.
+\emph{Step 2: signs.} By \eqref{eq:eta-in-dF}, \eqref{eq:S} and the monotonicity of $\partial F$ \ref{P:mono}, $m_n\ge0$. Similarly, $\eta_n\in\partial F(\nu_{n-1})$ gives $r(s_n,\nu_n-\nu_{n-1})=(\eta_{n+1}-\eta_n,\nu_n-\nu_{n-1})\ge0$. Summing \eqref{eq:lyap} yields the bounds and the summability, and $Bu_n=s_n+\nu_n$ is bounded.
 
-\emph{Step 3: weak cluster points are saddle points.} Let $\nu_{n_k}\weak\bar\nu$, $\eta_{n_k+1}\weak\bar\eta$ and $u_{n_k}\weak\bar u$. Since $s_n\to0$, we have $B\bar u=\bar\nu$, and passing to the limit in \eqref{eq:alg-u2} gives $(\bar\eta,Bw)=\ell(w)$. Taking $w=u_n$ in \eqref{eq:alg-u2}, $(\eta_{n+1},\nu_n)=\ell(u_n)-(\eta_{n+1},s_n)-r(\nu_n-\nu_{n-1},Bu_n)\to\ell(\bar u)=(\bar\eta,\bar\nu)$ along $n_k$. By \eqref{eq:eta-in-dF}, $F(q)\ge F(\nu_{n_k})+(\eta_{n_k+1},q)-(\eta_{n_k+1},\nu_{n_k})$; by weak lower semicontinuity, $F(q)\ge F(\bar\nu)+(\bar\eta,q-\bar\nu)$. Hence $\bar\eta\in\partial F(\bar\nu)$, and $(\bar u,\bar\nu,\bar\eta)$ is a saddle point by Proposition~\ref{prop:saddle}.
+\emph{Step 3: weak cluster points are saddle points.} Let $\nu_{n_k}\weak\bar\nu$, $\eta_{n_k+1}\weak\bar\eta$ and $u_{n_k}\weak\bar u$. Since $s_n\to0$, we have $B\bar u=\bar\nu$, and passing to the limit in \eqref{eq:alg-u2} gives $(\bar\eta,Bw)=\ell(w)$. Taking $w=u_n$ in \eqref{eq:alg-u2}, $(\eta_{n+1},\nu_n)=\ell(u_n)-(\eta_{n+1},s_n)-r(\nu_n-\nu_{n-1},Bu_n)\to\ell(\bar u)=(\bar\eta,\bar\nu)$ along $n_k$. By \eqref{eq:eta-in-dF}, $F(q)\ge F(\nu_{n_k})+(\eta_{n_k+1},q)-(\eta_{n_k+1},\nu_{n_k})$; by weak lower semicontinuity \ref{P:wlsc}, $F(q)\ge F(\bar\nu)+(\bar\eta,q-\bar\nu)$. Hence $\bar\eta\in\partial F(\bar\nu)$, and $(\bar u,\bar\nu,\bar\eta)$ is a saddle point by Proposition~\ref{prop:saddle}.
 
-\emph{Step 4: the whole sequence (Opial's argument).} Let $x_n=(\nu_n,\eta_{n+1})$ and $\langle(\nu,\eta),(\nu',\eta')\rangle=r(\nu,\nu')+\frac1r(\eta,\eta')$. For every saddle pair $z$, $\abs{x_n-z}^2=2E_n(z)$ converges. If $z_1$ and $z_2$ are weak cluster points, they are saddle pairs by Step~3, so $\langle x_n,z_1-z_2\rangle$ converges, and evaluating the limit along the two subsequences gives $\abs{z_1-z_2}=0$. Hence $x_n\weak(\bar\nu,\bar\eta)$ and $\eta_n\weak\bar\eta$, and, since $B$ is injective, $u_n\weak\bar u$. In the concrete case, Rellich's theorem gives $u_n\to\bar u$ in $L^2$.
+\emph{Step 4: the whole sequence.} Let $x_n=(\nu_n,\eta_{n+1})$ in $H\times H$ with the inner product $r(\nu,\nu')+\frac1r(\eta,\eta')$. For every saddle pair $z=(\nu^*,\eta^*)$, $\abs{x_n-z}^2=2E_n(z)$ converges by Step~2, and every weak cluster point of $(x_n)$ is a saddle pair by Step~3; by Opial's lemma \cite{Opial1967}, as in \cite[Ch.~VI, \S7]{Glowinski1984ChVI}, $x_n\weak(\bar\nu,\bar\eta)$. Hence $\eta_n\weak\bar\eta$, and, since $B$ is injective, $u_n\weak\bar u$. In the concrete case, Rellich's theorem gives $u_n\to\bar u$ in $L^2$.
 \end{proof}
 
 \begin{remark}[Initialization; related results]\label{rem:init}\label{rem:A-literature}
 Since $s_n+(\nu_n-\nu_{n-1})=Bu_n-\nu_{n-1}$, identity \eqref{eq:lyap} can be written as $E_n+m_n+\frac r2\norm{Bu_n-\nu_{n-1}}^2=E_{n-1}$ for every $n\ge1$, whatever $\eta_1$ is; hence all conclusions hold for arbitrary $\nu_0,\eta_1\in H$. Identity \eqref{eq:lyap} is the equality version, for $\rho=r$, of Glowinski's inequality \cite[Ch.~VI, (5.25)]{Glowinski1984ChVI}, and Step~4 is the argument of \cite[Ch.~VI, \S7]{Glowinski1984ChVI}; what Theorem~\ref{thm:A} adds is that hypotheses (iii)--(iv) are not needed for weak convergence. The same functional appears in \cite[Thm.~3.7]{BartelsMilicevic2017} and \cite[App.~A]{Boyd2011ADMM}. Weak convergence can also be derived from the equivalence of ADMM with Douglas--Rachford splitting for the dual problem \cite{Gabay1983}, \cite[\S5]{EcksteinBertsekas1992} and from the weak convergence of the latter \cite{LionsMercier1979,Svaiter2011,BauschkeCombettes2017}; see \cite{MoradifamNachman2011}. This weak convergence cannot be improved in general. Indeed, through the correspondence in the proof of Proposition~\ref{prop:unbounded}, the example of B\`ui and Combettes \cite{BuiCombettes2020}, in which the Douglas--Rachford shadow sequence converges weakly but not strongly, is an instance of \ref{A1}--\ref{A3} ($V=\R$, $Bt=te_0$, $\ell=0$) in which that sequence is $\eta_n$. The example says nothing, however, about $\nu_n$ or $u_n$.
+
+\emph{Which saddle point.} The functional $E_n$ is nonincreasing for \emph{every} saddle point $(u^*,\nu^*,\eta^*)$, but it need not tend to zero: it measures the distance to a set, and the iterates converge to some element of that set (Opial's argument), which may depend on the initialization and need not be the saddle point used in the definition of $E_n$. For instance, if $\nu_0=\bar\nu$ and $\eta_1=\bar\eta$ for a saddle point $(\bar u,\bar\nu,\bar\eta)$, the iterates stay at that point, and $E_n$ is the constant distance from it to $(u^*,\nu^*,\eta^*)$. If $J$ has a unique minimizer, for instance if $G(x,\cdot)$ is strictly convex, then every saddle point has $u^*$ and $\nu^*=\nabla u^*$ as its first two components, so $u_n\weak u^*$ and $\nu_n\weak\nu^*$ whatever the initialization; only the multiplier can depend on it. The multiplier is unique as well when $\partial F(\nu^*)$ is a single point, that is, when $G(x,\cdot)\in C^1$ with $g(x,0)=0$, since $\eta^*$ is then the flux $g(x,\abs{\nabla u^*})\nabla u^*/\abs{\nabla u^*}$; in that case the saddle point is unique and the whole sequence converges weakly to $(u^*,\nu^*,\eta^*)$. Note that what matters is that $\partial F$ be single-valued at $\nu^*$, not that $F$ be $C^1$ on $H$, which fails for $p>2$ since $F=+\infty$ outside $L^p$ (Lemma~\ref{lem:subdiff-Phi}). Uniform convexity alone does not suffice for this, and uniqueness may fail: $G=e^t-1$ is uniformly convex, but its multiplier is not determined in the dead core, where $\nabla u^*=0$ and $\partial F$ is multivalued, and for integrands with affine pieces the minimizer itself need not be unique \cite{CarstensenLiu2015}.
 \end{remark}
 
 The Lyapunov identity also shows that (S) cannot be dispensed with: without a saddle point, the iterates cannot remain bounded.
@@ -318,7 +334,7 @@ The Lyapunov identity also shows that (S) cannot be dispensed with: without a sa
 Assume \ref{A1}--\ref{A3} and let $(u_n,\nu_n,\eta_n)$ be generated from any $\nu_0,\eta_1\in H$. Then \textup{(S)} holds if and only if $(\eta_n+r\nu_{n-1})_n$ is bounded in $H$. In particular, if \textup{(S)} fails, $(\eta_n)$ or $(\nu_n)$ is unbounded.
 \end{proposition}
 \begin{proof}
-If (S) holds, boundedness follows from Theorem~\ref{thm:A} and Remark~\ref{rem:init}. Conversely, \eqref{eq:alg-u}--\eqref{eq:alg-eta} is the ADMM of \cite[Thm.~8]{EcksteinBertsekas1992} for $\min(-\ell(v))+F(Bv)$ with penalty $r$, relaxation $1$ and exact steps; the relations (Y1)--(Y3) of its proof are algebraic and hold in Hilbert space: $z_n:=\eta_n+r\nu_{n-1}$ is the Douglas--Rachford sequence for the maximal monotone operators $\mathcal A=\partial\iota_{\{B^*\eta=\ell\}}$ and $\mathcal B=\partial F^*$. The affine space $\{B^*\eta=\ell\}$ is nonempty and closed ($B^*$ is onto by \ref{A1}) with normal cone $R(B)$, and $0\in\mathcal A\eta+\mathcal B\eta$ means $\eta\in\partial F(Bu)$ for some $u$ with $B^*\eta=\ell$, i.e.\ \eqref{eq:S}. If (S) fails, $\operatorname{zer}(\mathcal A+\mathcal B)=\emptyset$ and $(z_n)$ is unbounded by \cite[Thm.~7]{EcksteinBertsekas1992}, stated in a general Hilbert space.
+If (S) holds, boundedness follows from Theorem~\ref{thm:A} and Remark~\ref{rem:init}. Conversely, \eqref{eq:alg-u}--\eqref{eq:alg-eta} is the ADMM of \cite[Thm.~8]{EcksteinBertsekas1992} for $\min(-\ell(v))+F(Bv)$ with penalty $r$, relaxation $1$ and exact steps; the relations (Y1)--(Y3) of its proof are algebraic and hold in Hilbert space: $z_n:=\eta_n+r\nu_{n-1}$ is the Douglas--Rachford sequence for the maximal monotone \ref{P:mono} operators $\mathcal A=\partial\iota_{\{B^*\eta=\ell\}}$ and $\mathcal B=\partial F^*$. The affine space $\{B^*\eta=\ell\}$ is nonempty and closed ($B^*$ is onto by \ref{A1}) with normal cone $R(B)$, and $0\in\mathcal A\eta+\mathcal B\eta$ means $\eta\in\partial F(Bu)$ for some $u$ with $B^*\eta=\ell$, i.e.\ \eqref{eq:S}. If (S) fails, $\operatorname{zer}(\mathcal A+\mathcal B)=\emptyset$ and $(z_n)$ is unbounded by \cite[Thm.~7]{EcksteinBertsekas1992}, stated in a general Hilbert space.
 \end{proof}
 
 \subsection{Theorem B: strong convergence for Musielak--Orlicz integrands}\label{ssec:thmB}
@@ -445,13 +461,13 @@ Lemma~\ref{lem:explicit} applies in particular to the radial problems used in ou
 On the unit disk with $f=c>0$ and a radial Young integrand $G(x,t)=G_0(\abs x,t)$ such that $g_0(s,\cdot)$ is continuous and strictly increasing on $(0,\infty)$ and $\inf_sg_0(s,t)\to\infty$ as $t\to\infty$, let $\tau(s)=0$ if $cs/2\le g_0(s,0)$ and otherwise $g_0(s,\tau(s))=cs/2$. Then $u(x)=\int_{\abs x}^1\tau(s)\,ds$ is Lipschitz, and $\eta(x)=-cx/2$ satisfies $-\divg\eta=c$ and $\eta\in\partial\Phi(x,\cdot)(\nabla u)$ a.e., by Lemma~\ref{lem:subdiff-Phi}(i) in the dead core of $e^t-1$ and by Lemma~\ref{lem:subdiff-Phi}(ii) elsewhere. By Lemma~\ref{lem:explicit}, (S) holds for these data. This includes $e^t-1-t$, $e^t-1$, variable exponents with $p^-<2$ and discontinuous radial coefficients, all of which lie outside the regularity theory reviewed below. The same holds for manufactured smooth solutions (Remark~\ref{rem:dirichlet-cont}).
 \end{remark}
 
-For the $p$-Laplacian, (S) can be characterized completely. The proof relies on an abstract multiplier lemma, which will be used again for Theorem~\ref{thm:C}.
+For the $p$-Laplacian, (S) can be characterized completely. The proof relies on a multiplier lemma, which is a form of the subdifferential sum rule.
 
 \begin{lemma}[Multiplier lemma]\label{lem:multiplier}
 Let $X$ be a real Hilbert space, $R\subset X$ a closed subspace, and $\Psi\colon X\to\R$ convex and bounded above on a ball centered at $q_0\in R$. If $q_0$ minimizes $\Psi$ over $R$, there is $\zeta\in\partial\Psi(q_0)$ with $\zeta\perp R$.
 \end{lemma}
 \begin{proof}
-The directional derivative $\Psi'(q_0;z)$ is finite and sublinear, nonnegative on $R$, and bounded above by $\Psi(q_0+z)-\Psi(q_0)$. By the Hahn--Banach theorem, the zero functional on $R$ extends to a linear functional $\zeta\le\Psi'(q_0;\cdot)$ on $X$. The boundedness of $\Psi$ near $q_0$ makes $\zeta$ continuous, so $\zeta\perp R$ and $\zeta\in\partial\Psi(q_0)$.
+By \ref{P:wlsc}, $\Psi$ is continuous at $q_0$. The indicator $\iota_R$ of $R$ has $\partial\iota_R(q_0)=R^\perp$, and $q_0$ minimizes $\Psi+\iota_R$, so \ref{P:calc} gives $0\in\partial\Psi(q_0)+R^\perp$.
 \end{proof}
 
 \begin{proposition}\label{prop:S-p}
@@ -605,7 +621,7 @@ The algorithm \eqref{eq:alg-u}--\eqref{eq:alg-eta} is applied to $(V_h,H_h,B_h,F
 $\norm{\nabla_hv}_h$ is a norm on $V_h^{\Pone}$ and on $V_h^{\CR}$; hence $A$ is symmetric positive definite and $(V_h,H_h,B_h,F_h,\ell_h)$ satisfies \ref{A1}--\ref{A3} with $\norm v_{V_h}:=\norm{\nabla_hv}_h$, $F_h$ finite, convex and continuous.
 \end{lemma}
 \begin{proof}
-Let $\nabla_hv=0$; then $v$ is constant on each triangle. In the CR case, two triangles sharing an edge $E\in\Ei$ take the same value at $m_E$, hence the same constant. Any two triangles are joined by a chain of triangles in which consecutive ones share an edge (a path in the connected polygon that avoids the finitely many vertices passes from triangle to triangle through interiors of edges), so $v$ is a single constant, and this constant vanishes at the midpoint of a boundary edge. The P1 case is classical. Finally, $F_h$ is a finite sum of finite convex functions of the blocks $q_T$.
+The P1 case is classical. If $v\in V_h^{\CR}$ and $\nabla_hv=0$, $v$ is constant on each triangle; neighbors through an edge $E\in\Ei$ share the value at $m_E$, any two triangles are joined by such a chain (the polygon is connected), and the constant vanishes at boundary midpoints. Finally, $F_h$ is a finite sum of finite convex functions of the blocks $q_T$.
 \end{proof}
 An $h$-uniform version of Lemma~\ref{lem:CRnorm}, namely a broken Poincar\'e--Friedrichs inequality, is not needed for Theorem~\ref{thm:C}; it is needed only for the limit $h\to0$, see \cite[(4.4)]{Ortner2011}, \cite{BuffaOrtner2009} and \cite[Lemma~3]{BalciOrtnerStorn2022}.
 
@@ -637,10 +653,10 @@ Then:
 By Lemma~\ref{lem:CRnorm} and the lifting it suffices to treat $V_h$ with $\tilde F_h$, which we still call $F_h$.
 
 
-(i) Let $L=\sup\{\abs{\ell_h(v)}:\norm{\nabla_hv}_h\le1\}$, which is finite since $V_h$ is finite-dimensional, and $a_{\min}=\min_T\abs T$. For $q\in H_h$, $\norm q_h^2\le\max_T\abs{q_T}\sum_T\abs T\abs{q_T}\le a_{\min}^{-1}(\sum_T\abs T\abs{q_T})^2$. Given $M>0$, \eqref{eq:superlinear} gives $t_M$ with $G_T(t)\ge Mt-Mt_M$ for all $t\ge0$ and all (finitely many) $T$. Hence $J_h(v)\ge(Ma_{\min}^{1/2}-L)\norm{\nabla_hv}_h-Mt_M\abs\Omega-C_\psi$, where $C_\psi$ accounts for the lifting ($G_T$ is nondecreasing and $\abs{q_T+\nabla_h\tilde u_h|_T}\ge\abs{q_T}-\abs{\nabla_h\tilde u_h|_T}$). For $Ma_{\min}^{1/2}>L$, $J_h$ is coercive and continuous on the finite-dimensional space $V_h$, so it attains its minimum. If every $G_T$ is strictly convex, then every $G_T$ is strictly increasing, so $\Phi_T$ is strictly convex (for $\abs{\xi_1}=\abs{\xi_2}$, $\xi_1\ne\xi_2$, use $\abs{(\xi_1+\xi_2)/2}<\abs{\xi_1}$); hence $F_h$ is strictly convex and so is $J_h=F_h\circ\nabla_h-\ell_h$, $\nabla_h$ being injective.
+(i) Let $L$ be the norm of $\ell_h$ on $(V_h,\norm{\nabla_h\cdot}_h)$ and $a_{\min}=\min_T\abs T$, so that $\norm q_h\le a_{\min}^{-1/2}\sum_T\abs T\abs{q_T}$. Given $M>0$, \eqref{eq:superlinear} gives $G_T(t)\ge M(t-t_M)$ for all $t\ge0$ and $T$, hence $J_h(v)\ge(Ma_{\min}^{1/2}-L)\norm{\nabla_hv}_h-C_M$, also with the lifting since $G_T$ is nondecreasing. Thus $J_h$ is continuous and coercive on $V_h$ and attains its minimum. If every $G_T$ is strictly convex, then every $G_T$ is strictly increasing, so $\Phi_T$ is strictly convex (for $\abs{\xi_1}=\abs{\xi_2}$, $\xi_1\ne\xi_2$, use $\abs{(\xi_1+\xi_2)/2}<\abs{\xi_1}$); hence $F_h$ is strictly convex and so is $J_h=F_h\circ\nabla_h-\ell_h$, $\nabla_h$ being injective.
 
 
-(ii) Let $R=\nabla_h(V_h)$ and $q_\ell\in R$ with $(q_\ell,\nabla_hw)_h=\ell_h(w)$. The function $\Psi(q)=F_h(q)-(q_\ell,q)_h$ is finite and convex on $H_h$, hence bounded above near every point, and $\nabla_hu_h$ minimizes $\Psi$ on $R$. Lemma~\ref{lem:multiplier} gives $\zeta\in\partial\Psi(\nabla_hu_h)$, $\zeta\perp R$; $\eta_h=\zeta+q_\ell$ satisfies $\eta_h\in\partial F_h(\nabla_hu_h)$ and $(\eta_h,\nabla_hw)_h=\ell_h(w)$. Since $F_h$ is a sum of functions of the blocks $q_T$ with weights $\abs T>0$, $\eta_h\in\partial F_h(q)$ iff $\eta_{h,T}\in\partial\Phi_T(q_T)$ for all $T$. By Proposition~\ref{prop:saddle}, which uses only \ref{A1}--\ref{A3}, this is a saddle point for every $r>0$. This is the finite-dimensional duality of \cite[Ch.~VI, \S4.2]{Glowinski1984ChVI}.
+(ii) Since $F_h$ is finite, $0\in\partial J_h(u_h)$ and the chain rule in \ref{P:calc} give $\eta_h\in\partial F_h(\nabla_hu_h)$ with $(\eta_h,\nabla_hw)_h=\ell_h(w)$ for all $w\in V_h$; this is the finite-dimensional existence of saddle points of \cite[Ch.~VI, \S4.2]{Glowinski1984ChVI}, see also \cite[Rem.~3.1]{BartelsMilicevic2017}. Since $F_h$ is a sum of functions of the blocks $q_T$ with weights $\abs T>0$, $\eta_h\in\partial F_h(q)$ iff $\eta_{h,T}\in\partial\Phi_T(q_T)$ for all $T$. By Proposition~\ref{prop:saddle}, this is a saddle point for every $r>0$.
 
 (iii) By (ii), (S) holds for the discrete data, and Theorem~\ref{thm:A}, whose proof uses only \ref{A1}--\ref{A3}, gives weak convergence to a saddle point for any initialization (Remark~\ref{rem:init}); in finite dimensions, weak convergence is strong convergence. By Proposition~\ref{prop:saddle}, $\bar u_h$ minimizes $J_h$.
 \end{proof}
@@ -702,7 +718,7 @@ The result \cite[Thm.~1]{BalciOrtnerStorn2022} assumes a Carath\'eodory integran
 Combined with Theorem~\ref{thm:C}, Remark~\ref{rem:BOS} gives Glowinski's method with CR elements a convergence theory in the Lavrentiev regime, \emph{under the assumptions of \cite[Thm.~1]{BalciOrtnerStorn2022}}, that is, polynomial two-sided growth and resolved coefficients or minimum quadrature. On every mesh the iteration converges, for every $r$, to the CR minimizer, and the CR minima converge to $\mW$ as $h\to0$. This theory gives no rates and says nothing about joint limits in the number of iterations and $h$, and it excludes exponential integrands. Two practical questions remain: how can one tell from computations whether there is a gap, and how far is a computed energy from $\mW$? A lower CR energy alone answers neither, since the CR energy is lower also without a gap (Remark~\ref{rem:gap-indicator}(e)). The next theorem gives a quantitative answer.
 
 \subsection{The Crouzeix--Raviart energy and a guaranteed lower bound}\label{ssec:bounds}
-The lower bound comes from convex duality, with Raviart--Thomas fields as dual variables. We recall the relevant facts. If $\phi(\xi)=\gamma(\abs\xi)$ with $\gamma$ a Young function, then $\phi^*(\zeta)=\gamma^*(\abs\zeta)$, and the Fenchel--Young inequality $\gamma(\abs\xi)+\gamma^*(\abs\zeta)\ge\zeta\cdot\xi$ holds with equality if and only if $\zeta\in\partial\phi(\xi)$ \cite{EkelandTemam1999}. If $\gamma$ is superlinear, $\gamma^*$ is finite, convex and continuous. Let
+The lower bound comes from convex duality, with Raviart--Thomas fields as dual variables. By \ref{P:FY} and \ref{P:radial}, for $\phi(\xi)=\gamma(\abs\xi)$ with $\gamma$ a Young function, $\gamma(\abs\xi)+\gamma^*(\abs\zeta)\ge\zeta\cdot\xi$, with equality if and only if $\zeta\in\partial\phi(\xi)$; if $\gamma$ is superlinear, $\gamma^*$ is finite, convex and continuous. Let
 \[
 \RT(\Th)=\{\sigma\in H(\divg,\Omega):\ \sigma|_T(x)=a_T+b_T\,x,\ a_T\in\R^2,\ b_T\in\R\ \ \forall T\}
 \]
@@ -716,11 +732,9 @@ Let $f_h$ be piecewise constant on $\Th$ and let $\zeta\in H_h$ satisfy
 Then $\sigma:=\zeta-\tfrac{f_h}{2}(x-x_T)$ on each $T$ belongs to $\RT(\Th)$ and $\divg\sigma=-f_h$. If $f_h=0$, $\sigma=\zeta$.
 \end{lemma}
 \begin{proof}
-On $T$, $\sigma=a_T+b_Tx$, so $\sigma\cdot n$ is constant on each edge of $T$ and $\divg\sigma|_T=-f_T$. Fix $E\in\Ei$, $E=\partial T_+\cap\partial T_-$, and $\phi_E$. On $T\ni E$, $\phi_E$ is affine, $\int_{E'}\phi_E=\abs{E'}\delta_{EE'}$ for the edges $E'$ of $T$, $\int_T\phi_E=\abs T/3$ and $\int_T(x-x_T)=0$. Green's formula on $T$ gives
-$\abs E(\sigma|_T\cdot n_T)|_E=\int_T\sigma\cdot\nabla\phi_E+\int_T\phi_E\divg\sigma=\abs T\zeta_T\cdot\nabla\phi_E|_T-f_T\int_T\phi_E$.
-Summing over $T_\pm$ and using \eqref{eq:equil} with $w=\phi_E$, we see that the jump of $\sigma\cdot n$ across $E$ vanishes. Since a piecewise polynomial field with continuous normal components belongs to $H(\divg,\Omega)$, the proof is complete.
+This is the generalized Marini formula of \cite[Prop.~2.37(ii)]{BalciKaltenbach2023}, stated there for the flux of the discrete solution of a $p(\cdot)$-problem; its proof uses only the discrete equation, here \eqref{eq:equil}, and applies verbatim. Directly: Green's formula on $T\ni E$ with the CR basis function $\phi_E$ gives $\abs E(\sigma|_T\cdot n_T)|_E=\abs T\zeta_T\cdot\nabla\phi_E|_T-f_T\abs T/3$, so the jump of $\sigma\cdot n$ across $E\in\Ei$ is the residual of \eqref{eq:equil} for $w=\phi_E$.
 \end{proof}
-For homogeneous Dirichlet data and the exact discrete flux of a $p(\cdot)$-problem, Lemma~\ref{lem:marini} and the identity of Theorem~\ref{thm:D}(ii) below are the generalized Marini formula and the discrete strong duality of \cite[Prop.~2.37]{BalciKaltenbach2023}, whose discrete dual uses $G_T^*(\abs{\Pi_T\sigma})$ (the two coincide when $f=0$). For an autonomous integrand of quadratic growth, the equivalence of the CR method with the Raviart--Thomas mixed method with one-point quadrature and the absence of a discrete duality gap were proved by Carstensen and Liu \cite[Thm.~3.1]{CarstensenLiu2015}, who also bound the CR energy from above by the exact energy up to a data-oscillation term \cite[(4.9)]{CarstensenLiu2015}. Theorem~\ref{thm:D} extends the duality to $x$-dependent integrands without growth conditions and with nonhomogeneous boundary data, and turns it into a guaranteed lower bound for $\mW$ that remains valid in the presence of a Lavrentiev gap. We refer to \cite{Bartels2021} for general convex problems and to \cite{Marini1985,ArnoldBrezzi1985} for the linear case. % CHECK: Marini1985, ArnoldBrezzi1985 data from memory; Bartels2021 not read (cited by BOS for precise relations to mixed methods).
+For homogeneous Dirichlet data and the exact discrete flux of a $p(\cdot)$-problem, the identity of Theorem~\ref{thm:D}(ii) below is the discrete strong duality of \cite[Prop.~2.37(iii)]{BalciKaltenbach2023}, whose discrete dual uses $G_T^*(\abs{\Pi_T\sigma})$ (the two coincide when $f=0$). For an autonomous integrand of quadratic growth, the equivalence of the CR method with the Raviart--Thomas mixed method with one-point quadrature and the absence of a discrete duality gap were proved by Carstensen and Liu \cite[Thm.~3.1]{CarstensenLiu2015}, who also bound the CR energy from above by the exact energy up to a data-oscillation term \cite[(4.9)]{CarstensenLiu2015}. Theorem~\ref{thm:D} extends the duality to $x$-dependent integrands without growth conditions and with nonhomogeneous boundary data, and turns it into a guaranteed lower bound for $\mW$ that remains valid in the presence of a Lavrentiev gap. We refer to \cite{Bartels2021} for general convex problems and to \cite{Marini1985,ArnoldBrezzi1985} for the linear case. % CHECK: Marini1985, ArnoldBrezzi1985 data from memory; Bartels2021 not read (cited by BOS for precise relations to mixed methods).
 What is new here, as far as we know, is the comparison with the \emph{continuous} infimum $\mW$, which holds also in the presence of a Lavrentiev gap, together with the boundary term for edge-mean data, the certificate at every iterate of the ADMM, and the bracket with the P1 energy.
 
 \begin{maintheorem}[Guaranteed lower bound]\label{thm:D}
@@ -1223,9 +1237,26 @@ A.~Moradifam and A.~Nachman, \emph{Convergence of the alternating split Bregman 
 C.~Ortner, \emph{Nonconforming finite-element discretization of convex variational problems}, IMA J. Numer. Anal. \textbf{31} (2011), no.~3, 847--864; doi:10.1093/imanum/drq004.
 % VERIFIED (PDF WRAP cover: citation and DOI).
 
+\bibitem{Opial1967}
+Z.~Opial, \emph{Weak convergence of the sequence of successive approximations for nonexpansive mappings}, Bull. Amer. Math. Soc. \textbf{73} (1967), 591--597.
+% FROM-MEMORY (new, condensation). CHECK (authors): all data; DOI (memory) 10.1090/S0002-9904-1967-11761-0.
+
 \bibitem{RaviartThomas1977}
 P.-A. Raviart and J.~M. Thomas, \emph{A mixed finite element method for 2nd order elliptic problems}, in \emph{Mathematical Aspects of Finite Element Methods} (Rome, 1975), Lecture Notes in Math.~606, Springer, Berlin, 1977, 292--315.
 % VERIFIED (SEC: refs of 2303.10687 [49]) (new).
+
+\bibitem{Rockafellar1968}
+R.~T. Rockafellar, \emph{Integrals which are convex functionals}, Pacific J. Math. \textbf{24} (1968), no.~3, 525--539.
+% FROM-MEMORY (new, condensation; data as given by the authors). CHECK (authors): issue number and the theorem number used (Thm. 2).
+
+\bibitem{Rockafellar1970}
+R.~T. Rockafellar, \emph{Convex Analysis}, Princeton Mathematical Series~28, Princeton University Press, Princeton, NJ, 1970.
+% VERIFIED title/publisher/year (SEC: refs of Eckstein-Bertsekas [44], Bartels-Milicevic [37], Carstensen-Liu [25], Boyd et al. [140]).
+% Series number 28 FROM-MEMORY. Theorem numbers used (all FROM-MEMORY, flagged % CHECK at each use): 15.3, 23.5, 23.9, 25.1.
+
+\bibitem{Rockafellar1970max}
+R.~T. Rockafellar, \emph{On the maximal monotonicity of subdifferential mappings}, Pacific J. Math. \textbf{33} (1970), 209--216.
+% VERIFIED (SEC: refs of Eckstein-Bertsekas [45]) (new, condensation).
 
 \bibitem{Svaiter2011}
 B.~F. Svaiter, \emph{On weak convergence of the Douglas--Rachford method}, SIAM J. Control Optim. \textbf{49} (2011), no.~1, 280--287.
