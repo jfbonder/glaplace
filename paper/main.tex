@@ -88,7 +88,7 @@ This class is very large. Besides the $p$-Laplacian ($G=t^p/p$), it contains the
 For the $p$-Laplacian, one of the most effective solvers is the decomposition--coordination method of Glowinski and Marrocco \cite{GlowinskiMarrocco1975} and of Fortin and Glowinski \cite{FortinGlowinski1983,FortinGlowinski1983ChIII,Glowinski1984ChVI}, known as ALG2; with the step length $\rho=r$ used here, it is an alternating direction method of multipliers (ADMM) \cite{GlowinskiPanTai2016,Boyd2011ADMM}. The method introduces an auxiliary variable $\nu=\nabla u$ and a multiplier $\eta$ for this constraint, and minimizes the corresponding augmented Lagrangian, with penalty parameter $r>0$, alternately in $u$ and in $\nu$. Each iteration therefore consists of a \emph{linear} Poisson-type problem for $u$, with the same matrix at every step; a \emph{pointwise} nonlinear problem for $\nu$, which reduces to a single scalar monotone equation $g(x,t)+rt=r\abs w$ at each point; and an explicit update of $\eta$, which at convergence is the flux $g(x,\abs{\nabla u})\nabla u/\abs{\nabla u}$. Since $G$ enters only through the scalar equation, nothing in the algorithm depends on the growth of $G$. In particular, the code of \cite{AragonFBRubio2023} for the $p(x)$-Laplacian extends verbatim to arbitrary Young functions, and the conforming P1 discretization can be replaced by a Crouzeix--Raviart (CR) one without touching the nonlinear step.
 
 \subsection*{Convergence is governed by regularity}
-Our first aim is to show that the theory can match this flexibility. Glowinski's convergence theorem requires the energy to be uniformly convex on bounded sets of $L^2$, and this fails as soon as $p<2$ (Proposition~\ref{prop:glowinski-pless2}). We show that uniform convexity is not needed. What governs the convergence of the continuous iteration is a regularity property of the solution, which we call Assumption~(S): $J$ has a minimizer in $H^1_0(\Omega)$ whose flux lies in $L^2(\Omega;\R^d)$, or, equivalently, the augmented Lagrangian has a saddle point. Under (S) the iterates converge weakly for every convex Young integrand, including nonsmooth integrands and integrands that violate $\Delta_2$ (Theorem~\ref{thm:A}). They converge strongly for every Musielak--Orlicz integrand that satisfies Lieberman's condition $\delta\le tg'/g\le g_0$ uniformly in $x$, without any continuity in $x$ (Theorem~\ref{thm:B} and Corollary~\ref{cor:B}). This covers the $p$-Laplacian with $1<p<2$, the $p(x)$-Laplacian with a merely measurable exponent and $p^-<2$, and two-phase energies with $p<2$ and discontinuous coefficients, none of which is covered by Glowinski's theorem. Conversely, if (S) fails, the iterates are unbounded (Proposition~\ref{prop:unbounded}, which follows from \cite[Thm.~7]{EcksteinBertsekas1992}), so nothing weaker than (S) can suffice. Section~\ref{sec:S} reviews when (S) is known to hold; for double phase, two-phase and exponential energies it is in general not available.
+Our first aim is to show that the theory can match this flexibility. Glowinski's convergence theorem requires the energy to be uniformly convex on bounded sets of $L^2$, and this fails as soon as $p<2$ (Proposition~\ref{prop:glowinski-pless2}). We show that uniform convexity is not needed. What governs the convergence of the continuous iteration is a regularity property of the solution, which we call Assumption~(S): $J$ has a minimizer in $H^1_0(\Omega)$ whose flux lies in $L^2(\Omega;\R^d)$, or, equivalently, the augmented Lagrangian has a saddle point. Under (S) the iterates converge weakly for every convex Young integrand, including nonsmooth integrands and integrands that violate $\Delta_2$ (Theorem~\ref{thm:A}). They converge strongly for every Musielak--Orlicz integrand that satisfies Lieberman's condition $\delta\le tg'/g\le g_0$ uniformly in $x$, without any continuity in $x$ (Theorem~\ref{thm:B}). This covers the $p$-Laplacian with $1<p<2$, the $p(x)$-Laplacian with a merely measurable exponent and $p^-<2$, and two-phase energies with $p<2$ and discontinuous coefficients, none of which is covered by Glowinski's theorem. Conversely, if (S) fails, the iterates are unbounded (Proposition~\ref{prop:unbounded}, which follows from \cite[Thm.~7]{EcksteinBertsekas1992}), so nothing weaker than (S) can suffice. Section~\ref{sec:S} reviews when (S) is known to hold; for double phase, two-phase and exponential energies it is in general not available.
 
 \subsection*{Does the computed solution approximate the true minimizer?}
 Convergence of the algorithm is not the whole story. In practice the iteration is run on a finite element space, and there it always converges: for P1 and CR discretizations it converges for every penalty parameter $r>0$ and every superlinear convex integrand, whatever the regularity of the solution (Theorem~\ref{thm:C}). The real question is whether the discrete minimizers approximate the right object. If there is no Lavrentiev gap, conforming P1 elements are adequate. If there is one, the P1 energies converge to the infimum $\mH$ of $J$ over Lipschitz functions and not to the true infimum $\mW$ over all functions of finite energy (\cite{CarstensenOrtner2010}; see Proposition~\ref{prop:P1} for coefficients that are constant on the triangles). Conforming elements, in other words, converge to the wrong minimum. Balci, Ortner and Storn \cite{BalciOrtnerStorn2022} showed that nonconforming CR elements do not suffer from this defect: under their assumptions, the CR energies converge to $\mW$.
@@ -273,7 +273,7 @@ Let $G$ be a Young integrand.
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-(a) $G(x,\cdot)-\frac\varepsilon2t^2$ is convex with nonnegative right derivative at $0$, hence nondecreasing, so $F_1$ is convex, proper and l.s.c.; $F\ge F_0$ gives (iii). (b) $\partial_th(x,t)=t\,k(x,\min\{t,1\})\le Kt$, so $F_0$ is $C^1$ on $H$ with Lipschitz gradient $q\mapsto k(\cdot,\min\{\abs q,1\})q$; $G-h$ is convex and nondecreasing because $g(x,t)-g(x,s)\ge(t-s)k(x,1)$ for $t>s\ge1$. Lemma~\ref{lem:psi} below, applied to $k(x,\min\{t,1\})$, and the splitting argument of the proof of Theorem~\ref{thm:B}(b) give $(F_0'(q)-F_0'(p),q-p)\ge\frac38k_*(\min\{\frac{\norm{q-p}}{4\abs\Omega^{1/2}},1\})\norm{q-p}^2$, and replacing $k_*$ by the continuous minorant $\tau^{-1}\int_0^\tau k_*$ yields an admissible $\delta_M$. Finally $G\ge h\ge\frac12k_*(1)(t^2-1)$ gives (iii).
+(a) $G(x,\cdot)-\frac\varepsilon2t^2$ is convex with nonnegative right derivative at $0$, hence nondecreasing, so $F_1$ is convex, proper and l.s.c.; $F\ge F_0$ gives (iii). (b) $\partial_th(x,t)=t\,k(x,\min\{t,1\})\le Kt$, so $F_0$ is $C^1$ on $H$ with Lipschitz gradient $q\mapsto k(\cdot,\min\{\abs q,1\})q$; $G-h$ is convex and nondecreasing because $g(x,t)-g(x,s)\ge(t-s)k(x,1)$ for $t>s\ge1$. Lemma~\ref{lem:psi} below, applied to $k(x,\min\{t,1\})$, and the splitting argument of the proof of Theorem~\ref{thm:B}(a) give $(F_0'(q)-F_0'(p),q-p)\ge\frac38k_*(\min\{\frac{\norm{q-p}}{4\abs\Omega^{1/2}},1\})\norm{q-p}^2$, and replacing $k_*$ by the continuous minorant $\tau^{-1}\int_0^\tau k_*$ yields an admissible $\delta_M$. Finally $G\ge h\ge\frac12k_*(1)(t^2-1)$ gives (iii).
 \end{proof}
 
 Part~(b) of Lemma~\ref{lem:split} covers $t^p/p$ and $t^{p(x)}/p(x)$ with $2\le p(x)\le p^+<\infty$, which justifies \cite[Thm.~4.3]{AragonFBRubio2023}; part~(a) covers uniformly convex integrands such as $e^t-1$, $e^t-1-t$, $t^2/2+a(x)t^4/4$ with measurable $a\ge0$, and $t^{3/2}/(3/2)+t^3/3$. For all of these, Glowinski's theorem gives strong convergence under (S). Below $p=2$, however, it gives nothing.
@@ -348,18 +348,11 @@ Weak convergence is the best one can expect in the abstract setting, but for con
 \[
 k(x,t)=\frac{g(x,t)}t\ (t>0),\qquad \varpi(x;a,b)=(T(x,a)-T(x,b))\cdot(a-b)\ge0 .
 \]
-By \eqref{eq:dF-C1} and \eqref{eq:eta-in-dF}, $\eta_{n+1}=T(\cdot,\nu_n)$ and $\eta^*=T(\cdot,\nu^*)$ for every saddle point, hence
+By \eqref{eq:dF-C1} and \eqref{eq:eta-in-dF}, $\eta_{n+1}=T(\cdot,\nu_n)$ and $\eta^*=T(\cdot,\nu^*)$ for every saddle point, so Theorem~\ref{thm:A} gives
 \begin{equation}\label{eq:mn-psi}
 m_n=\int_\Omega\varpi(x;\nu_n(x),\nu^*(x))\dx\to0 .
 \end{equation}
-Glowinski's hypothesis (iv) asks for a uniform lower bound of $\varpi$ in terms of $\abs{a-b}$ alone, and such a bound is false for $p<2$ (Proposition~\ref{prop:glowinski-pless2}). What survives for nonstandard growth is a lower bound \emph{up to a small multiple of the energy}, which we formalize as follows.
-
-\begin{definition}[Modular uniform monotonicity]\label{def:UM}
-$G$ satisfies \textup{(UM)} with \emph{error modular} $\Theta$ if $\Theta\colon\Omega\times[0,\infty)\to[0,\infty)$ is Carath\'eodory, $\Theta(x,\cdot)$ is nondecreasing with $\Theta(x,t)>0$ for $t>0$, and there is $\omega\colon(0,1]\to[0,\infty)$ with $\omega(\varepsilon)\to0$ as $\varepsilon\downarrow0$ such that, for a.e.\ $x$, all $a,b\in\R^d$ and all $\varepsilon\in(0,1]$,
-\begin{equation}\label{eq:UM}
-\Theta\big(x,\abs{a-b}\big)\le\frac1\varepsilon\,\varpi(x;a,b)+\omega(\varepsilon)\big(G(x,\abs a)+G(x,\abs b)\big).
-\end{equation}
-\end{definition}
+The question is how to turn $m_n\to0$ into convergence of $\nu_n-\nu^*$ in norm. When $k(x,\cdot)$ is nondecreasing, which for $G=t^p/p$ means $p\ge2$ and in general means that $g(x,t)/t$ grows, this is immediate, because the monotonicity gap controls $\abs{a-b}^2$ from below:
 
 \begin{lemma}\label{lem:psi}
 If $t\mapsto k(x,t)$ is nondecreasing on $(0,\infty)$ and $k(x,0):=\lim_{t\downarrow0}k(x,t)$, then $\varpi(x;a,b)\ge\frac12k(x,\frac{\abs{a-b}}2)\abs{a-b}^2$ for all $a,b$.
@@ -368,39 +361,21 @@ If $t\mapsto k(x,t)$ is nondecreasing on $(0,\infty)$ and $k(x,0):=\lim_{t\downa
 With $k_a=k(x,\abs a)$ and $k_b=k(x,\abs b)$ we have $\varpi=\frac12(k_a+k_b)\abs{a-b}^2+\frac12(k_a-k_b)(\abs a^2-\abs b^2)$, and the second term is $\ge0$. Hence $\varpi\ge\frac12k(x,\max\{\abs a,\abs b\})\abs{a-b}^2$, and $\max\{\abs a,\abs b\}\ge\abs{a-b}/2$.
 \end{proof}
 
-\begin{maintheorem}\label{thm:B}
-Assume \textup{(S)} and that $G(x,\cdot)\in C^1([0,\infty))$ with $g(x,0)=0$ for a.e.\ $x$; let $(\bar u,\bar\nu,\bar\eta)$ be the limit in Theorem~\ref{thm:A}.
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item If $G$ satisfies \textup{(UM)}, then $\int_\Omega\Theta(x,\abs{\nu_n-\bar\nu})\dx\to0$; $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ strongly in $L^s(\Omega;\R^d)$ for every $s\in[1,2)$, and $u_n\to\bar u$ in $W^{1,s}_0(\Omega)$. Moreover $\nu^*=\bar\nu$ for every saddle point, so the minimizer of $J$ on $H^1_0(\Omega)$ is unique.
-\item If $\Omega_+\subset\Omega$ is measurable, $k(x,\cdot)$ is nondecreasing for a.e.\ $x\in\Omega_+$ and $k_+(t):=\essinf_{x\in\Omega_+}k(x,t)>0$ for every $t>0$, then $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ in $L^2(\Omega_+;\R^d)$. If $\Omega_+=\Omega$, the minimizer of $J$ on $H^1_0$ is unique. \textup(No \textup{(UM)} is needed in \textup{(b)}.\textup)
-\end{enumerate}
-\end{maintheorem}
-
-\begin{proof}
-Fix a saddle point $(u^*,\nu^*,\eta^*)$ and put $e_n=\nu_n-\nu^*$.
-
-(a) By \eqref{eq:eta-in-dF} and $F\ge0=F(0)$, $F(\nu_n)\le(\eta_{n+1},\nu_n)\le M:=\sup_k\norm{\eta_{k+1}}\sup_k\norm{\nu_k}<\infty$, and $F(\nu^*)<\infty$. Integrating \eqref{eq:UM} with $a=\nu_n$, $b=\nu^*$ and using \eqref{eq:mn-psi}, we obtain
-$\int_\Omega\Theta(x,\abs{e_n})\le m_n/\varepsilon+\omega(\varepsilon)(M+F(\nu^*))$ for $\varepsilon\in(0,1]$; letting first $n\to\infty$ and then $\varepsilon\to0$ gives $\int\Theta(x,\abs{e_n})\to0$. Every subsequence has a further subsequence along which $\Theta(x,\abs{e_n(x)})\to0$, hence $e_n(x)\to0$, a.e. Since $(e_n)$ is bounded in $L^2$, $(\abs{e_n}^s)$ is uniformly integrable for $s<2$, and Vitali's theorem gives $e_n\to0$ in $L^s$ for the whole sequence. As $\nu_n\weak\bar\nu$, it follows that $\nu^*=\bar\nu$; then $\nabla u_n=s_n+\nu_n\to\nabla\bar u$ in $L^s$, and Poincar\'e's inequality gives $u_n\to\bar u$ in $W^{1,s}_0$. Finally, if $u'$ minimizes $J$ on $H^1_0$, then $J(u')=J(u^*)$ and the subgradient inequality give $F(q)\ge F(\nabla u')+(\eta^*,q-\nabla u')$ for all $q$, i.e.\ $(u',\nabla u',\eta^*)$ is a saddle point; hence $\nabla u'=\bar\nu$ and $u'=\bar u$.
-
-(b) On $\Omega_+\cap\{\abs{e_n}>\delta\}$, Lemma~\ref{lem:psi} and the monotonicity of $k$ give $\varpi(x;\nu_n,\nu^*)\ge\frac12k_+(\delta/2)\abs{e_n}^2$. Hence $\norm{e_n}^2_{L^2(\Omega_+)}\le\delta^2\abs\Omega+2m_n/k_+(\delta/2)$ and $e_n\to0$ in $L^2(\Omega_+)$. Since $\nu_n\weak\bar\nu$ also in $L^2(\Omega_+)$, $\nu^*=\bar\nu$ a.e.\ in $\Omega_+$, and $\nabla u_n=s_n+\nu_n\to\nabla\bar u$ in $L^2(\Omega_+)$. If $\Omega_+=\Omega$, uniqueness follows as in (a).
-\end{proof}
-
-The key a priori fact in (a) is that, under (S), the energies $F(\nu_n)$ are bounded; condition (UM) then converts $m_n\to0$ into convergence in the modular $\Theta$. It remains to identify integrands that satisfy (UM). The next lemma shows that (UM) holds, with $\Theta$ comparable to $G$, for every integrand that satisfies Lieberman's condition uniformly in $x$.
+When $k(x,\cdot)$ decreases, as for $1<p<2$, the lower bound of $\varpi$ degenerates where $\abs a+\abs b$ is large, and no inequality of the form $\varpi\ge c\,\Theta(\abs{a-b})$ can hold (cf.\ Proposition~\ref{prop:glowinski-pless2}). For the $p$-Laplacian one compensates this with H\"older's inequality and the boundedness of the energy, and for the $p(x)$-Laplacian one usually splits $\Omega$ into the regions $\{p\ge2\}$ and $\{p<2\}$. For a general Young integrand there is no exponent with which to split $\Omega$. The following lemma splits instead, at every point, according to the relative size of $\abs{a-b}$ and $\abs a+\abs b$: where the difference is comparable to the vectors, the monotonicity gap controls it; where it is small compared with them, the energy does. It only uses Lieberman's condition, uniformly in $x$.
 
 \begin{lemma}\label{lem:UM-L}
 Let $G(x,\cdot)\in C^1([0,\infty))\cap C^2(0,\infty)$, $g(x,0)=0$, $g(x,t)>0$ for $t>0$, and assume that for some $0<\delta\le g_0<\infty$
 \begin{equation}\tag{L}\label{eq:L}
 \delta\le\frac{t\,\partial_tg(x,t)}{g(x,t)}\le g_0\qquad\text{for a.e.\ }x\in\Omega\text{ and all }t>0 .
 \end{equation}
-Put $\gamma=(g_0-1)_+$, $\beta=(1-\delta)_+$, $c_1=\min\{1,\delta\}\,4^{-1-\gamma}$. Then for a.e.\ $x$ and all $a,b\in\R^d$, with $S=\abs a+\abs b$:
+Put $\gamma=(g_0-1)_+$, $\beta=(1-\delta)_+$ and $c_1=\min\{1,\delta\}\,4^{-1-\gamma}$. Then for a.e.\ $x$ and all $a,b\in\R^d$, with $S=\abs a+\abs b$:
 \begin{enumerate}[label=\textup{(\roman*)}]
 \item $\varpi(x;a,b)\ge c_1\,k(x,S)\,\abs{a-b}^2$;
-\item if $\delta\ge1$, $G(x,\abs{a-b})\le c_1^{-1}\varpi(x;a,b)$; if $\delta<1$, for every $\varepsilon\in(0,1]$,
+\item for every $\lambda\in(0,1]$,
 \[
-G(x,\abs{a-b})\le\frac{1}{c_1\varepsilon}\,\varpi(x;a,b)+(1+g_0)2^{g_0}\varepsilon^{\kappa}\big(G(x,\abs a)+G(x,\abs b)\big),
-\qquad\kappa=\frac{1+\delta}{1-\delta};
+G(x,\abs{a-b})\le\frac{\lambda^{-\beta}}{c_1}\,\varpi(x;a,b)+2^{1+g_0}\lambda^{1+\delta}\big(G(x,\abs a)+G(x,\abs b)\big);
 \]
-in particular $G$ satisfies \textup{(UM)} with $\Theta=c_1G$;
+in particular $G(x,\abs{a-b})\le c_1^{-1}\varpi(x;a,b)$ if $\delta\ge1$;
 \item if $g_0<1$, $\abs{T(x,a)-T(x,b)}\le\frac3\delta\,g(x,\abs{a-b})$.
 \end{enumerate}
 \end{lemma}
@@ -409,35 +384,51 @@ in particular $G$ satisfies \textup{(UM)} with $\Theta=c_1G$;
 We fix $x$ and omit it from the notation. From \eqref{eq:L}, $(\log g)'\in[\delta/t,g_0/t]$ and $(\log k)'\in[(\delta-1)/t,(g_0-1)/t]$; integrating, for $0<t\le S$,
 \begin{equation}\label{eq:kcomp}
 k(S)\Big(\frac tS\Big)^{\gamma}\le k(t)\le k(S)\Big(\frac St\Big)^{\beta},\qquad
-g(2t)\le2^{g_0}g(t),\quad G(2t)\le2^{1+g_0}G(t),\quad tg(t)\le(1+g_0)G(t),
+G(2t)\le2^{1+g_0}G(t),\qquad (1+\delta)G(t)\le tg(t)\le(1+g_0)G(t),
 \end{equation}
-the last because $(tg)'\le(1+g_0)g$.
+the last two because $(1+\delta)g\le(tg)'\le(1+g_0)g$.
 
 (i) For $\xi\ne0$, $DT(\xi)$ is symmetric with eigenvalues $k(\abs\xi)$ and $g'(\abs\xi)\in[\delta k(\abs\xi),g_0k(\abs\xi)]$. With $e=a-b$, $c_s=b+se$, $s\mapsto T(c_s)$ is absolutely continuous (its derivative is bounded by $\max\{1,g_0\}k(\abs{c_s})\abs e$, integrable since $k(t)\le k(1)t^{\delta-1}$ for $t\le1$), so $\varpi(a,b)=\int_0^1e\cdot DT(c_s)e\,ds\ge\min\{1,\delta\}\abs e^2\int_0^1k(\abs{c_s})\,ds$. If $\abs a\ge\abs b$, then $\abs{c_s}\ge S/4$ for $s\in[\frac34,1]$, and \eqref{eq:kcomp} gives $\int_0^1k(\abs{c_s})\,ds\ge\frac14k(S)4^{-\gamma}$; the other case is symmetric.
 
-(ii) Since $G(t)\le tg(t)=k(t)t^2$ and $\abs e\le S$, so $G(\abs e)\le k(S)S^\beta\abs e^{2-\beta}$ by \eqref{eq:kcomp}. If $\delta\ge1$, $\beta=0$ and (i) concludes. If $\delta<1$, Young's inequality $X^\theta Y^{1-\theta}\le X+Y$ with $\theta=\frac{2-\beta}2$, $X=\abs e^2/\varepsilon$, $Y=\varepsilon^\kappa S^2$ gives $S^\beta\abs e^{2-\beta}\le\abs e^2/\varepsilon+\varepsilon^\kappa S^2$; by (i) and \eqref{eq:kcomp}, $G(\abs e)\le\frac{\varpi}{c_1\varepsilon}+\varepsilon^\kappa(1+g_0)G(S)$, and $G(S)\le2^{g_0}(G(\abs a)+G(\abs b))$ by convexity.
+(ii) Let $e=a-b$, so that $\abs e\le S$. If $\abs e\ge\lambda S$, then $G(\abs e)\le\abs e\,g(\abs e)=k(\abs e)\abs e^2\le k(S)(S/\abs e)^\beta\abs e^2\le\lambda^{-\beta}k(S)\abs e^2$ by \eqref{eq:kcomp}, and (i) gives $G(\abs e)\le\lambda^{-\beta}\varpi/c_1$. If $\abs e<\lambda S$, then, since $\log G$ grows at least like $(1+\delta)\log t$ by \eqref{eq:kcomp}, $G(\abs e)\le G(\lambda S)\le\lambda^{1+\delta}G(S)$, and $G(S)\le G(2\max\{\abs a,\abs b\})\le2^{1+g_0}(G(\abs a)+G(\abs b))$. In both cases the asserted inequality holds. If $\delta\ge1$, then $\beta=0$ and we let $\lambda\to0$.
 
-(iii) If $g_0<1$, then $k$ is nonincreasing and $\abs{DT}\le k$. Let $s^*$ minimize $\abs{c_s}$ over $\R$; then $\abs{c_s}\ge\abs e\abs{s-s^*}$ and $k(\abs{c_s})\le k(\abs e)\max\{1,\abs{s-s^*}^{\delta-1}\}$, so $\abs{T(a)-T(b)}\le\abs e\int_0^1k(\abs{c_s})\,ds\le(1+\frac2\delta)g(\abs e)$.
+(iii) If $g_0<1$, then $k$ is nonincreasing and $\abs{DT}\le k$. Let $s^*$ minimize $\abs{c_s}$ over $\R$; then $\abs{c_s}\ge\abs e\abs{s-s^*}$ and $k(\abs{c_s})\le k(\abs e)\max\{1,\abs{s-s^*}^{\delta-1}\}$, so $\abs{T(a)-T(b)}\le\abs e\int_0^1k(\abs{c_s})\,ds\le(1+\frac2\delta)g(\abs e)\le\frac3\delta g(\abs e)$.
 \end{proof}
 
-\begin{corollary}[Variable exponents, double phase, Lieberman-type integrands]\label{cor:B}
-Assume \textup{(S)} and \eqref{eq:L}, and let $(\bar u,\bar\nu,\bar\eta)$ be the limit in Theorem~\ref{thm:A}.
-\begin{enumerate}[label=\textup{(\roman*)}]
-\item $\int_\Omega G(x,\abs{\nu_n-\bar\nu})\dx\to0$ \textup(hence convergence in the Luxemburg norm of $L^{G(\cdot)}$, since \eqref{eq:L} implies $\Delta_2$ uniformly in $x$\textup), and all conclusions of Theorem~\ref{thm:B}(a) hold.
-\item If $\delta\ge1$ and $\essinf_xg(x,1)>0$, then $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ in $L^2$.
-\item If $g_0<1$ and $K:=\esssup_xg(x,1)<\infty$, then $\eta_n\to\bar\eta$ strongly in $L^2$ and $\int_\Omega G(x,\abs{\nabla u_n-\nabla\bar u})\dx\to0$.
+\begin{maintheorem}\label{thm:B}
+Assume \textup{(S)} and that $G(x,\cdot)\in C^1([0,\infty))$ with $g(x,0)=0$ for a.e.\ $x$; let $(\bar u,\bar\nu,\bar\eta)$ be the limit in Theorem~\ref{thm:A}.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $k(x,\cdot)$ is nondecreasing for a.e.\ $x$ and $k_*(t):=\essinf_xk(x,t)>0$ for every $t>0$, then $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ strongly in $L^2(\Omega;\R^d)$, and $u_n\to\bar u$ in $H^1_0(\Omega)$.
+\item If $G$ satisfies \eqref{eq:L}, then $\int_\Omega G(x,\abs{\nu_n-\bar\nu})\dx\to0$, that is, $\nu_n\to\bar\nu$ in the Musielak--Orlicz space $L^{G(\cdot)}$; moreover $\nu_n\to\bar\nu$ and $\nabla u_n\to\nabla\bar u$ in $L^s(\Omega;\R^d)$ and $u_n\to\bar u$ in $W^{1,s}_0(\Omega)$ for every $s\in[1,2)$. If in addition $g_0<1$ and $K:=\esssup_xg(x,1)<\infty$, then $\int_\Omega G(x,\abs{\nabla u_n-\nabla\bar u})\dx\to0$ and $\eta_n\to\bar\eta$ strongly in $L^2(\Omega;\R^d)$.
 \end{enumerate}
-\end{corollary}
+\end{maintheorem}
+
 \begin{proof}
-Part~(i) is Theorem~\ref{thm:B}(a) combined with Lemma~\ref{lem:UM-L}(ii), and part~(ii) is Theorem~\ref{thm:B}(b) with $\Omega_+=\Omega$, since $k(x,\cdot)$ is nondecreasing and $k(x,t)\ge g(x,1)\min\{1,t^{\gamma}\}$. (iii) By \eqref{eq:kcomp}, $g(x,t)\le K(t^\delta+t^{g_0})$; by Lemma~\ref{lem:UM-L}(iii), $\abs{\eta_{n+1}-\bar\eta}^2\le\frac{18K^2}{\delta^2}(\abs{e_n}^{2\delta}+\abs{e_n}^{2g_0})$, $e_n=\nu_n-\bar\nu$, which is uniformly integrable ($2g_0<2$) and tends to $0$ a.e.\ along sub-subsequences; Vitali's theorem and $\eta_{n+1}-\eta_n\to0$ give $\eta_n\to\bar\eta$ in $L^2$. Finally $G(x,\abs{s_n+e_n})\le2^{g_0}(G(x,\abs{s_n})+G(x,\abs{e_n}))$ with $G(x,t)\le2K(t^{1+\delta}+t^2)$, $s_n\to0$ in $L^2$, and (i).
+Fix a saddle point $(u^*,\nu^*,\eta^*)$ and put $e_n=\nu_n-\nu^*$. In both parts we show that $e_n\to0$ in the stated sense; since $\nu_n\weak\bar\nu$, this forces $\nu^*=\bar\nu$, and the assertions on $\nabla u_n=s_n+\nu_n$ follow from $s_n\to0$ in $L^2$ (Theorem~\ref{thm:A}) and Poincar\'e's inequality.
+
+(a) On $\{\abs{e_n}>\tau\}$, Lemma~\ref{lem:psi} and the monotonicity of $k$ give $\varpi(x;\nu_n,\nu^*)\ge\frac12k_*(\tau/2)\abs{e_n}^2$. Hence $\norm{e_n}^2\le\tau^2\abs\Omega+2m_n/k_*(\tau/2)$ for every $\tau>0$, and $e_n\to0$ in $L^2$ by \eqref{eq:mn-psi}.
+
+(b) By \eqref{eq:eta-in-dF} and $F\ge0=F(0)$, $F(\nu_n)\le(\eta_{n+1},\nu_n)\le M:=\sup_k\norm{\eta_{k+1}}\sup_k\norm{\nu_k}<\infty$, and $F(\nu^*)<\infty$. Integrating Lemma~\ref{lem:UM-L}(ii) with $a=\nu_n$ and $b=\nu^*$,
+\[
+\int_\Omega G(x,\abs{e_n})\dx\le\frac{\lambda^{-\beta}}{c_1}\,m_n+2^{1+g_0}\lambda^{1+\delta}\big(M+F(\nu^*)\big)\qquad(0<\lambda\le1);
+\]
+letting first $n\to\infty$ and then $\lambda\to0$ gives $\int G(x,\abs{e_n})\to0$, which is convergence in the Luxemburg norm because \eqref{eq:L} implies the $\Delta_2$ condition uniformly in $x$ \eqref{eq:kcomp}. Every subsequence has a further subsequence along which $G(x,\abs{e_n(x)})\to0$, hence $e_n(x)\to0$, a.e.; since $(e_n)$ is bounded in $L^2$, $(\abs{e_n}^s)$ is uniformly integrable for $s<2$, and Vitali's theorem gives $e_n\to0$ in $L^s$. If $g_0<1$, then $g(x,t)\le K(t^\delta+t^{g_0})$ by \eqref{eq:L}, and $G(x,t)\le tg(x,t)\le2K(t^{1+\delta}+t^2)$. Since $\nu^*=\bar\nu$, $\eta^*=T(\cdot,\bar\nu)$ for every saddle point, so $\bar\eta=T(\cdot,\bar\nu)$; Lemma~\ref{lem:UM-L}(iii) gives $\abs{\eta_{n+1}-\bar\eta}^2\le\frac{18K^2}{\delta^2}(\abs{e_n}^{2\delta}+\abs{e_n}^{2g_0})$, which is uniformly integrable and tends to $0$ a.e.\ along sub-subsequences, so $\eta_{n+1}\to\bar\eta$ in $L^2$, and $\eta_{n+1}-\eta_n=rs_n\to0$. Finally $G(x,\abs{s_n+e_n})\le2^{1+g_0}(G(x,\abs{s_n})+G(x,\abs{e_n}))$, and $\int G(x,\abs{s_n})\le2K\int(\abs{s_n}^{1+\delta}+\abs{s_n}^2)\to0$.
 \end{proof}
 
-\paragraph{Examples.} Condition \eqref{eq:L} holds, with \emph{no continuity in $x$}, in three important cases: for $t^{p(x)}/p(x)$ with measurable $p$ and $1<p^-\le p\le p^+<\infty$, with $\delta=p^--1$ and $g_0=p^+-1$ (for constant $p\in(1,2)$, Corollary~\ref{cor:B}(i),(iii) gives strong convergence in $W^{1,p}_0$ and convergence of $\eta_n$ in $L^2$); for double phase and two-phase integrands $t^p/p+a(x)t^q/q$, $1<p\le q<\infty$, with \emph{any} measurable $a\ge0$, with $\delta=p-1$ and $g_0=q-1$; and for integrands of the type $t^p\log^\alpha(e+t)$. Thus, \emph{whenever (S) holds}, the iteration converges strongly for the $p(x)$-Laplacian with $p^-<2$, including Zhikov's checkerboard exponent, and for two-phase problems with $p<2$ and discontinuous coefficients. None of these cases is covered by Glowinski's theorem; for $p\ge2$, Lemma~\ref{lem:split} applies. The exponential integrands fall outside \eqref{eq:L} but are still covered. For $e^t-1-t$, which violates \eqref{eq:L} because $tg'/g\to\infty$, Theorem~\ref{thm:B}(b) applies with $\Omega_+=\Omega$, since $k=(e^t-1)/t\ge1$ is nondecreasing. For $e^t-1$, where $\partial F$ is multivalued, Glowinski's theorem applies via Lemma~\ref{lem:split}(a).
+\begin{remark}[The $p$-Laplacian with $1<p<2$: a rate in terms of $m_n$]\label{rem:pLap-rate}
+For $G=t^p/p$, $1<p<2$, Lemma~\ref{lem:UM-L}(i) is the classical inequality $\varpi(a,b)\ge c_p\abs{a-b}^2(\abs a+\abs b)^{p-2}$, and H\"older's inequality with exponents $\frac2p$ and $\frac2{2-p}$ replaces the case distinction of Lemma~\ref{lem:UM-L}(ii): with $S_n=\abs{\nu_n}+\abs{\nu^*}$,
+\[
+\int_\Omega\abs{e_n}^p=\int_\Omega\big(\abs{e_n}^2S_n^{p-2}\big)^{\frac p2}S_n^{\frac{p(2-p)}2}\le\Big(\frac{m_n}{c_p}\Big)^{\frac p2}\Big(\int_\Omega S_n^p\Big)^{\frac{2-p}2},
+\]
+and $\int S_n^p$ is bounded by the energy bound in the proof of Theorem~\ref{thm:B}(b). Hence $\norm{\nu_n-\bar\nu}_{L^p}^2\le C\,m_n$, and, since $\sum_nm_n<\infty$ by Theorem~\ref{thm:A}, $\sum_n\norm{\nu_n-\bar\nu}_{L^p}^2<\infty$. For the $p(x)$-Laplacian the same computation, done on $\{p(x)<2\}$ with Young's inequality instead of H\"older's, together with Lemma~\ref{lem:psi} on $\{p(x)\ge2\}$, is the usual splitting argument; Lemma~\ref{lem:UM-L}(ii) does the same thing without reference to an exponent.
+\end{remark}
+
+\paragraph{Examples.} Condition \eqref{eq:L} holds, with \emph{no continuity in $x$}, in three important cases: for $t^{p(x)}/p(x)$ with measurable $p$ and $1<p^-\le p\le p^+<\infty$, with $\delta=p^--1$ and $g_0=p^+-1$ (for constant $p\in(1,2)$, Theorem~\ref{thm:B}(b) gives strong convergence in $W^{1,p}_0$ and convergence of $\eta_n$ in $L^2$, and Remark~\ref{rem:pLap-rate} a quantitative form); for double phase and two-phase integrands $t^p/p+a(x)t^q/q$, $1<p\le q<\infty$, with \emph{any} measurable $a\ge0$, with $\delta=p-1$ and $g_0=q-1$; and for integrands of the type $t^p\log^\alpha(e+t)$. Thus, \emph{whenever (S) holds}, the iteration converges strongly for the $p(x)$-Laplacian with $p^-<2$, including Zhikov's checkerboard exponent, and for two-phase problems with $p<2$ and discontinuous coefficients. None of these cases is covered by Glowinski's theorem; for $p\ge2$, Lemma~\ref{lem:split} applies. The exponential integrands fall outside \eqref{eq:L} but are still covered. For $e^t-1-t$, which violates \eqref{eq:L} because $tg'/g\to\infty$, Theorem~\ref{thm:B}(a) applies, since $k=(e^t-1)/t\ge1$ is nondecreasing. For $e^t-1$, where $\partial F$ is multivalued, Glowinski's theorem applies via Lemma~\ref{lem:split}(a).
 
 All of the above extends to nonhomogeneous boundary data by a standard shift.
 
 \begin{remark}[Nonhomogeneous Dirichlet data]\label{rem:dirichlet-cont}
-If $u=\psi$ on $\partial\Omega$ with $\psi\in H^1(\Omega)$ and $F(\nabla\psi)<\infty$, write $u=\psi+v$, $v\in H^1_0$, and $\tilde F(q)=F(q+\nabla\psi)$. Then $(V,H,\nabla,\tilde F,\ell)$ satisfies \ref{A1}--\ref{A3}, and Proposition~\ref{prop:saddle} and Theorems~\ref{thm:A}--\ref{thm:B} apply in the variables $(v,q,\eta)$ with $\nu=q+\nabla\psi$; in the proof of Theorem~\ref{thm:B}(a), $F(\nu_n)=\tilde F(q_n)\le\tilde F(0)+(\eta_{n+1},q_n)$ is still bounded.
+If $u=\psi$ on $\partial\Omega$ with $\psi\in H^1(\Omega)$ and $F(\nabla\psi)<\infty$, write $u=\psi+v$, $v\in H^1_0$, and $\tilde F(q)=F(q+\nabla\psi)$. Then $(V,H,\nabla,\tilde F,\ell)$ satisfies \ref{A1}--\ref{A3}, and Proposition~\ref{prop:saddle} and Theorems~\ref{thm:A}--\ref{thm:B} apply in the variables $(v,q,\eta)$ with $\nu=q+\nabla\psi$; in the proof of Theorem~\ref{thm:B}(b), $F(\nu_n)=\tilde F(q_n)\le\tilde F(0)+(\eta_{n+1},q_n)$ is still bounded.
 \end{remark}
 
 %======================================================================
@@ -505,7 +496,7 @@ Several results give globally bounded gradients, and hence (S) by Lemma~\ref{lem
 For $d\ge3$, $f\in L^{d,1}$ and $\partial\Omega\in W^2L^{d-1,1}$, bounded gradients are obtained in \cite{CianchiMazya2011} (as recalled in \cite[Rem.~2.6]{CianchiMazya2018}; we have not checked the original). For convex domains and $p$-type $a$ with $2\le p<d$, they follow from \cite[Thm.~3.5]{CianchiMazya2014JEMS}, which also gives $\abs{\nabla u}^{p-1}\in L^2$ already for $f\in L^{2d/(d+2)}$ \cite[Thm.~4.1(ii)]{CianchiMazya2014JEMS}. Convexity cannot simply be dropped: the examples in \cite[\S1]{CianchiMazya2014JEMS} show that gradient bounds may fail on domains close to convex ones. Interior $C^{1,\alpha}$ regularity, by contrast, is classical \cite{DiBenedetto1983,Tolksdorf1984}, and is proved for \eqref{eq:L} in \cite[Thm.~1.7]{Lieberman1991}; as noted above, it does not give (S).
 
 \paragraph{Variable exponents.} For $p\in C^{0,\mu}(\overline\Omega)$ with $p^->1$ and $\partial\Omega\in C^{1,\beta}$, global $C^{1,\alpha}$ regularity of bounded weak solutions is due to Fan, see \cite{Fan2007}. % CHECK: Fan 2007 not read in the original; hypotheses as usually cited.
-We could not check its hypotheses in the original, so in this case (S) holds only conditionally. Interior results are given in \cite{CosciaMingione1999,AcerbiMingione2001}. For log-H\"older or merely measurable exponents no gradient bound is known, and (S) must be assumed; when it holds, Corollary~\ref{cor:B} gives strong convergence without any continuity of $p$.
+We could not check its hypotheses in the original, so in this case (S) holds only conditionally. Interior results are given in \cite{CosciaMingione1999,AcerbiMingione2001}. For log-H\"older or merely measurable exponents no gradient bound is known, and (S) must be assumed; when it holds, Theorem~\ref{thm:B}(b) gives strong convergence without any continuity of $p$.
 
 \paragraph{Double phase and two-phase energies.} For $a\in C^{0,\alpha}$ only \emph{interior} gradient regularity is known, and mostly for $f\equiv0$: under $q/p<1+\alpha/d$ \cite[Thm.~1.2]{ColomboMingione2015a} and $q/p\le1+\alpha/d$ \cite[Thm.~1.1]{BaroniColomboMingione2018}, and for bounded minimizers under $q\le p+\alpha$ \cite{ColomboMingione2015b,BaroniColomboMingione2018}. A right-hand side is allowed in \cite[Thm.~1.3]{DeFilippisMingione2021}, for $a\in W^{1,\sigma}$ with $\sigma>d$, and general Musielak--Orlicz energies without right-hand side are treated in \cite{HastoOk2022}. For double phase energies, therefore, (S) must be assumed. For discontinuous $a$ nothing is available, except explicit solutions (Remark~\ref{rem:radial-S}).
 
@@ -513,7 +504,7 @@ We could not check its hypotheses in the original, so in this case (S) holds onl
 
 \paragraph{Failure of (S).} Finally, (S) fails whenever the minimizer is not in $H^1_0$ (Proposition~\ref{prop:S-p}(i)), even without any Lavrentiev phenomenon (Example~\ref{ex:noS} below).
 
-In summary, (S) is known to hold globally for autonomous integrands with Lieberman's condition (under the domain and data assumptions above) and, conditionally on \cite{Fan2007}, for H\"older continuous exponents, while for log-H\"older and measurable exponents, double phase, two-phase and exponential energies it must be assumed or verified on explicit solutions. Whenever (S) holds, Theorem~\ref{thm:B} applies to all of these energies except the exponential ones, for which Theorem~\ref{thm:B}(b) or Glowinski's theorem applies.
+In summary, (S) is known to hold globally for autonomous integrands with Lieberman's condition (under the domain and data assumptions above) and, conditionally on \cite{Fan2007}, for H\"older continuous exponents, while for log-H\"older and measurable exponents, double phase, two-phase and exponential energies it must be assumed or verified on explicit solutions. Whenever (S) holds, Theorem~\ref{thm:B} applies to all of these energies except the exponential ones, for which Theorem~\ref{thm:B}(a) or Glowinski's theorem applies.
 
 
 \subsection{(S) and the Lavrentiev gap}\label{ssec:SvsGap}
@@ -846,10 +837,10 @@ All computations use the Python package \texttt{glaplace}, with P1 or CR element
 
 Some runs did not reach the residual tolerance, although their duality gaps were small. For $e^t-1$, the two finest meshes did not reach it in $20\,000$ iterations, while the duality gap was below $10^{-9}$; the computed solution is flat in the dead core ($\abs{\nabla u_h}\le2.2\times10^{-8}$ for $\abs x<0.2$). For $t^p/p$ with $p=1.2$ and $p=1.1$, none of the eight runs reached it in $50\,000$ iterations (final residuals up to $2\times10^{-8}$ and $4\times10^{-7}$, respectively), with duality gaps below $8\times10^{-9}$. The iteration slows down as $p\to1$, where $\partial F$ becomes multivalued in the limit.
 
-For the radial variable exponents ($p^-<2$), the discrete diagnostics $\norm{\nabla_hu_h}$, $\norm{\eta_h}$ and $\max\abs{\eta_h}$ converge under refinement. This is consistent with (S), although Theorem~\ref{thm:diag} gives only the converse implication. On the finest mesh, the modular $\int\abs{\nu_n-\nabla u_h}^{p_T}$ decays to $10^{-12}$--$10^{-16}$ in $1000$ iterations, in line with Corollary~\ref{cor:B}, which, however, concerns the continuous iteration. CR elements give the same orders, with slightly smaller errors and fewer iterations.
+For the radial variable exponents ($p^-<2$), the discrete diagnostics $\norm{\nabla_hu_h}$, $\norm{\eta_h}$ and $\max\abs{\eta_h}$ converge under refinement. This is consistent with (S), although Theorem~\ref{thm:diag} gives only the converse implication. On the finest mesh, the modular $\int\abs{\nu_n-\nabla u_h}^{p_T}$ decays to $10^{-12}$--$10^{-16}$ in $1000$ iterations, in line with Theorem~\ref{thm:B}(b), which, however, concerns the continuous iteration. CR elements give the same orders, with slightly smaller errors and fewer iterations.
 
 \begin{table}[t]
-\caption{Smooth problems with exact solutions (P1): observed orders of the relative $L^2$ errors of $u$ and $\nabla u$ and of the nodal maximum error, and iterations on the coarsest/finest mesh. Top and middle: radial problems on the unit disk ($h$ down to $0.0125$, or $0.025$ for $p\to1$); bottom: manufactured solution on $(0,1)^2$ ($n=10,\dots,80$, pairwise orders). ``Theory'': result giving convergence of the continuous iteration, given that (S) holds for these data (Remark~\ref{rem:radial-S}); G: Glowinski's theorem via Lemma~\ref{lem:split}; B: Theorem~\ref{thm:B} or Corollary~\ref{cor:B}. $^*$: residual tolerance not reached.}\label{tab:orders}
+\caption{Smooth problems with exact solutions (P1): observed orders of the relative $L^2$ errors of $u$ and $\nabla u$ and of the nodal maximum error, and iterations on the coarsest/finest mesh. Top and middle: radial problems on the unit disk ($h$ down to $0.0125$, or $0.025$ for $p\to1$); bottom: manufactured solution on $(0,1)^2$ ($n=10,\dots,80$, pairwise orders). ``Theory'': result giving convergence of the continuous iteration, given that (S) holds for these data (Remark~\ref{rem:radial-S}); G: Glowinski's theorem via Lemma~\ref{lem:split}; B: Theorem~\ref{thm:B}. $^*$: residual tolerance not reached.}\label{tab:orders}
 \small
 \begin{tabular}{@{}llcccc@{}}
 \toprule
